@@ -1,10 +1,19 @@
 <template>
   <div id="map">
-    <!--supporting /-->
+    
+    <div id="supportingLayers">
+      <SupportingLayers 
+        v-if="supportingLayersInfo"
+        v-bind:supportingLayers= "supportingLayersInfo"
+        v-bind:expand="false"
+        v-bind:skipLayers="[1,2]"
+        title="Supporting Layers" />
+   </div>
   </div>
 </template>
 
 <script>
+import SupportingLayers from "./SupportingLayers.vue"
 import Map from "@arcgis/core/Map"
 import MapView from "@arcgis/core/views/MapView"
 import MapImageLayer from "@arcgis/core/layers/MapImageLayer"
@@ -15,16 +24,25 @@ let mapLayer = ''
 
 export default {
   name: 'Map',
+  components: {
+    SupportingLayers
+  },
   computed: {
     layerSelected () {
       return this.$store.state.visibleLayer
-    }
+    },
+    supportingLayersInfo(){
+        console.log(this.$store.state.supportingLayers)
+         return this.$store.state.supportingLayers
+    },
+   
   },
   watch:{
     layerSelected() {
       this.updateMap()
     }
   },
+ 
   mounted() {
      //select a basemap
     const map = new Map({
@@ -32,7 +50,7 @@ export default {
     })
 
     //create the map view 
-    new MapView({
+    const mapView = new MapView({
       map: map,
       center: [-122.506479,48.370655],
       zoom: 11,
@@ -46,6 +64,8 @@ export default {
     });
 
     map.add(mapLayer)
+    
+    mapView.ui.add("supportingLayers", "top-right")
   },  
 
   methods: {
@@ -64,5 +84,9 @@ export default {
 div {
   width: 70%;
   height: 100%;
+}
+#supportingLayers{
+  width: 400px;
+
 }
 </style>

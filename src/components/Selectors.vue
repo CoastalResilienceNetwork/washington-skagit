@@ -36,17 +36,11 @@
         </li>
       </ul>
     </Dialog>
-    <Dropdown 
-      id="select1"
-      class="ma-5"
-      v-model="selected1"
-      :options="$store.state.selectorInfo"
-      optionLabel="first"
-      @change="buildSelect2()"
-      style="float:clear"
-      placeholder="Select a Simulation"
-      > 
-    </Dropdown>
+    <select id="select1" class="ma-5" v-model="selected1"  @change="buildSelect2()" placeholder="Select a Simulation" > 
+      <option v-for="option,index in $store.state.selectorInfo" :key="index" :value="option">
+        {{ option.first }}
+      </option>
+    </select>
 
     <!--for the second select, we iterate through second, and build the third list from the second selected item  -->
     <div class="center">
@@ -65,17 +59,12 @@
       Flow refers to the mean volume of water moving through the Skagit River Delta during a specified time of the year or during flood stage. Four flow scenarios were assessed here with volume provided in cubic feet per second (cfs): Low flow (12,000 cfs for both current and future/climate change low flow simulations); Second quarter (62,000 cfs average over April, May, & June without climate change or 103,237 cfs with climate change); May mean river discharge (20,400 cfs); and Flood stage (93,200 cfs).
       Tidal fluctations change water surface elevation (WSE) over the course of a day, and sea level rise is changing and projected to further change tidal WSE this century. Tidal water surface elevations relative to NADV88 vertical datum was assessed for five scenarios: High tide (10.8 ft); High tide with flood scenario only (10.4 ft); High tide with climate change (12.67 ft); Low tide (-3.3 ft); and Low tide with climate change (1.43 ft).
     </p-->
-    <Dropdown 
-      id="select2" 
-      class="ma-5"
-      v-if="selected1" 
-      v-model="selected2" 
-      :options="list2" 
-      optionLabel="second" 
-      @change="buildSelect3()"
-      placeholder="Select a Flow &amp; Tide"
-      >
-    </Dropdown>
+    <select id="select2" class="ma-5" v-if="selected1" v-model="selected2"  @change="buildSelect3()"
+      placeholder="Select a Flow &amp; Tide">
+      <option v-for="option,index in list2" :key="index" :value="option">
+        {{ option.second }}
+      </option>
+    </select>
 
     <!--the third select iterates through selected2 and stores the final layer number as its value -->
     <div class="center">
@@ -89,16 +78,11 @@
       Three types of model outputs are available here: water surface elevation (WSE), change in WSE, and depth. All are in units of vertical feet. Here, water surface elevation is the elevation of the water surface relative to the NADV88 vertical datum (as opposed to other datums like Mean High High Water or  Mean Sea Level). Change in WSE is calculated as the difference in WSE from baseline to post-project implementation. Depth is the vertical distance from the water surface to the river floor or sea floor.
     </Dialog>
    
-    <Dropdown
-      id="select3"
-      class="ma-5"
-      v-if="selected2"
-      v-model="selected3"
-      :options="list3" 
-      optionLabel="third" 
-      placeholder="Select a model output"
-      >
-    </Dropdown>
+    <select id="select3" class="ma-5" v-if="selected2" v-model="selected3" placeholder="Select a model output">
+      <option v-for="option,index in list3" :key="index" :value="option">
+      {{ option.third }}
+      </option>
+    </select>
     <DynamicLayerList />
   </div>
 </template>
@@ -140,6 +124,7 @@ export default {
     methods: {
       //format data for dropdown 2
       buildSelect2(){
+        console.log(this.selected1)
         this.selected3=''; this.selected2=''
         let list2 = []
         this.selected1.second.forEach(element => list2.push({"second": Object.keys(element)[0], "third": element[Object.keys(element)[0]]}))

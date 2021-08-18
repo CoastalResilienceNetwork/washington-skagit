@@ -16,6 +16,7 @@ export default {
   mounted() {
     // create data store for the app
     this.$store.dispatch('requestSelectorInfo')
+    this.$store.dispatch('requestSupportingLayers')
   }
 }
 </script>

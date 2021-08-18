@@ -3,20 +3,19 @@
 <h4 class="mb-0"> Model Layers: </h4>
 Use the selectors above to add viewable layers to the map for comparison.  
   <div id="layerCards" ref="layerCards" v-if="$store.state.selectedLayerList.length>0">
-    <Card
+    <div
       @click="cardSelected(layer,index)"
       v-for="layer, index in $store.state.selectedLayerList"
       :key="index"
       :id="index"
       v-bind:class="{active: (index === selected) ? true : false}"
-      class="p-shadow-3 card"
+      class="card"
     >
-      <template #content >
         {{layer.layerNameFirst}} <br/>
         {{layer.layerNameSecond}} <br/>
         {{layer.layerNameThird}} <br/>
-      </template>
-    </Card>
+
+    </div>
 
   </div>
 </template>
@@ -29,7 +28,7 @@ export default {
   data(){
     return {
       selected: 0,
-      selectedLayerNum: '',
+      selectedLayerNum: 0,
       isActive: false,
     }
   },
@@ -37,7 +36,7 @@ export default {
     //watch for when a new layer is added to make it active
     selectedLayerListLength () {
       return this.$store.state.selectedLayerList.length
-    }
+    },
   },
   watch: {
     selectedLayerNum: function () {
@@ -50,18 +49,20 @@ export default {
     selectedLayerListLength: function(){
       //new items are at the top of the list
       this.selected = 0
-      
+      //now access its layer num and update here
+      this.selectedLayerNum = this.$store.state.selectedLayerList[0].layerNum
     }
   
   },
   methods:{
     cardSelected(layer,index){
       console.log('clicked')
-      console.log(layer)
-      console.log(index)
-      console.log(this.selectedLayerNum)
+      //console.log('layer: ' + layer)
+      //console.log('index:' + index)
+      console.log('this.selectedLayerNumBefore: ' + this.selectedLayerNum)
+      console.log('changingTo:'  + layer.layerNum)
       this.selectedLayerNum = layer.layerNum
-      console.log(this.selectedLayerNum)
+      console.log('this.selectedLayerNumAfter: ' + this.selectedLayerNum)
       this.selected = index
     }
   }
@@ -80,10 +81,12 @@ export default {
 
 .card{
   margin:5px; cursor: default;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
+  padding: 10px;
 }
 
 .card:hover{
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
 
 .active {
