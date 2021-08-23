@@ -9,10 +9,9 @@
   },
   "dependencies": {
     "@arcgis/core": "^4.20.2",
+    "@quasar/extras": "^1.10.10",
     "core-js": "^3.6.5",
-    "primeflex": "^2.0.0",
-    "primeicons": "^4.1.0",
-    "primevue": "^3.6.0",
+    "quasar": "^2.0.3",
     "vue": "^3.0.0",
     "vuex": "^4.0.0-0"
   },

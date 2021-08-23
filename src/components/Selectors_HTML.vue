@@ -1,15 +1,16 @@
 <template>
-  <div class="q-ma-md">
-    <p class="text-subtitle2 q-mb-none"> Model Selectors: </p>
-    <p>Use the selectors to add viewable layers to the map for comparison </p>
+  <div id="selectors" >
+<!-- header on all three two and htree that shows paragraphs instead of the dropdown -->
+<!--add cards for addition of layers-->
     <!--for the first select we are looping through the list of objects in the store and displaying the 'first' attribute. 
     the selected value is stored in v-model so on the change event we build the second list from the first selected value-->
-    <div class='q-pl-md q-pr-md'>
-     <!--div class="center">
-        <p class="text-subtitle2 headers"> Simulation Name </p>&nbsp;
-        <q-btn @click="dialogDisplay1=true" flat round color="primary" icon="info" size="10px" />
-     </div-->
-     <!-- DIALOG  
+   
+    <h5 class="headers"> Simulation Name </h5>
+    <!-- DIALOG  
+     <div class="center">
+      <h5 class="headers"> Simulation Name </h5>
+      <Button @click="dialogDisplay1=true" icon="pi pi-info-circle" class="p-button-sm p-button p-component p-button-icon-only p-button-rounded p-button-text p-button-plain" />
+    </div>
     <Dialog style="width:65%" v-model:visible="dialogDisplay1" >
       <template #header>
         <h4>Simulation Name</h4>
@@ -38,17 +39,19 @@
         </li>
       </ul>
     </Dialog> -->
-    <p class="text-caption text-red q-mt-sm q-mb-none" v-if="!selected1">Select a simulation</p>
-     <q-select outlined id="select1" class="q-pa-xs" label="Simulation Name" v-model="selected1" 
-     :options="$store.state.selectorInfo" dense options-dense></q-select>
+    <select id="select1" class="ma-5" v-model="selected1"  @change="buildSelect2()" placeholder="Select a Simulation" > 
+      <option v-for="option,index in $store.state.selectorInfo" :key="index" :value="option">
+        {{ option.first }}
+      </option>
+    </select>
 
     <!--for the second select, we iterate through second, and build the third list from the second selected item  -->
-
-    <!--div class="center">
-      <p class="text-subtitle2 headers"> Flow (cfs) &amp; Tide (ft)</p>
-      <q-btn @click="dialogDisplay1=true" flat round color="primary" icon="info" size="10px" />
-    </div-->
-        <!-- DIALOG 
+    <h5 class="headers"> Flow (cfs) &amp; Tide (ft)</h5>
+    <!-- DIALOG 
+    <div class="center">
+      <h5 class="headers"> Flow (cfs) &amp; Tide (ft)</h5>
+      <Button @click="dialogDisplay2=true" icon="pi pi-info-circle" class="p-button-sm p-button p-component p-button-icon-only p-button-rounded p-button-text p-button-plain" />
+    </div>
     <Dialog style="width:65%" v-model:visible="dialogDisplay2" >
       <template #header>
         <h4>Flow (cfs) &amp; Tide (ft)</h4>
@@ -57,30 +60,35 @@
       Flow refers to the mean volume of water moving through the Skagit River Delta during a specified time of the year or during flood stage. Four flow scenarios were assessed here with volume provided in cubic feet per second (cfs): Low flow (12,000 cfs for both current and future/climate change low flow simulations); Second quarter (62,000 cfs average over April, May, &amp; June without climate change or 103,237 cfs with climate change); May mean river discharge (20,400 cfs); and Flood stage (93,200 cfs).
       Tidal fluctations change water surface elevation (WSE) over the course of a day, and sea level rise is changing and projected to further change tidal WSE this century. Tidal water surface elevations relative to NADV88 vertical datum was assessed for five scenarios: High tide (10.8 ft); High tide with flood scenario only (10.4 ft); High tide with climate change (12.67 ft); Low tide (-3.3 ft); and Low tide with climate change (1.43 ft)."
     </Dialog> -->
-    <p class="text-caption text-red q-mt-sm q-mb-none" v-if="!selected2 && selected1">Select a flow &amp; tide</p>
-    <q-select v-if="this.selected1" outlined id="select2" class="q-pa-xs" v-model="selected2"
-     :options="list2" label="Flow (cfs) &amp; Tide (ft)" dense options-dense ></q-select>
+     
+    <select id="select2" class="ma-5" v-if="selected1" v-model="selected2"  @change="buildSelect3()"
+      placeholder="Select a Flow &amp; Tide">
+      <option v-for="option,index in list2" :key="index" :value="option">
+        {{ option.second }}
+      </option>
+    </select>
 
     <!--the third select iterates through selected2 and stores the final layer number as its value -->
-    
-   
-    <!--div class="center">
-    <p class="text-subtitle2 headers"> Model output (ft)</p>
-    <q-btn @click="dialogDisplay1=true" flat round color="primary" icon="info" size="10px" />
-    </div-->
-     <!--DIALOG
+    <h5 class="headers"> Model output (ft)</h5>
+    <!--DIALOG
+    <div class="center">
+    <h5 class="headers"> Model output (ft)</h5>
+    <Button @click="dialogDisplay3=true" icon="pi pi-info-circle" class="p-button-sm p-button p-component p-button-icon-only p-button-rounded p-button-text p-button-plain" />
+    </div>
     <Dialog style="width: 65%" v-model:visible="dialogDisplay3" >
       <template #header>
         <h4>Model output (ft)</h4>
       </template>
       Three types of model outputs are available here: water surface elevation (WSE), change in WSE, and depth. All are in units of vertical feet. Here, water surface elevation is the elevation of the water surface relative to the NADV88 vertical datum (as opposed to other datums like Mean High High Water or  Mean Sea Level). Change in WSE is calculated as the difference in WSE from baseline to post-project implementation. Depth is the vertical distance from the water surface to the river floor or sea floor.
     </Dialog> -->
-    <p class="text-caption text-red q-mt-sm q-mb-none" v-if="!selected3 && selected2">Select a model output</p>
-    <q-select v-if="this.selected2" outlined id="select2" class="q-pa-xs" v-model="selected3" 
-    :options="list3" label="Model output (ft)" dense options-dense></q-select>
-   </div>
+   
+    <select id="select3" class="ma-5" v-if="selected2" v-model="selected3" placeholder="Select a model output">
+      <option v-for="option,index in list3" :key="index" :value="option">
+      {{ option.third }}
+      </option>
+    </select>
     <DynamicLayerList />
- </div>
+  </div>
 </template>
 
 <script>
@@ -107,36 +115,29 @@ export default {
       selected3: function () {
         if (this.selected3){
           let layerSelectedObj = {
-            layerNameFirst: this.selected1.label,
-            layerNameSecond: this.selected2.label,
-            layerNameThird: this.selected3.label,
+            layerNameFirst: this.selected1.first,
+            layerNameSecond: this.selected2.second,
+            layerNameThird: this.selected3.third,
             layerNum: this.selected3.layerNum
           }
           this.$store.commit('addLayer', layerSelectedObj)
           this.$store.commit('updateVisibleLayer', this.selected3.layerNum)
        }
-      },
-      selected1: function(){
-        this.buildSelect2()
-      },
-      selected2: function(){
-        if (this.selected2){
-          this.buildSelect3()
-        }
       }
     },
     methods: {
       //format data for dropdown 2
       buildSelect2(){
-        this.selected2=''; this.selected3=''
+        console.log(this.selected1)
+        this.selected3=''; this.selected2=''
         let list2 = []
-        this.selected1.second.forEach(element => list2.push({"label": Object.keys(element)[0], "third": element[Object.keys(element)[0]]}))
+        this.selected1.second.forEach(element => list2.push({"second": Object.keys(element)[0], "third": element[Object.keys(element)[0]]}))
         this.list2 = list2      
       },
       buildSelect3(){
         this.selected3=''
         let list3 = []
-        this.selected2.third.forEach(element => list3.push({"label":element[0] , "layerNum":element[1]}))
+        this.selected2.third.forEach(element => list3.push({"third":element[0] , "layerNum":element[1]}))
         this.list3 = list3
       },
 
@@ -151,5 +152,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+ #selectors {padding: 10px; width: 30vw; }
+ .headers{ margin-bottom: 0px; margin-top:0px}
+ .ma-5{margin: 5px; }
+ .center{display: flex; align-items: center}
+ .dialogWidth{width: 70%}
 </style>

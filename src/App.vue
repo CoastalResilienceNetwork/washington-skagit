@@ -1,12 +1,29 @@
 <template>
-    <Panel />
-    <Map />
+  <q-layout view="lHh lpR lFf">
+    <q-header reveal elevated class="bg-primary text-white">
+      <q-toolbar>
+        <q-toolbar-title>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+          </q-avatar>
+           SKAGIT BAY, WASHINGTON
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-header>
+    <q-page-container>
+      <router-view />
+         <q-page class="q-pa-md row">
+         <Panel class="col-4" />
+         <Map class="col-8" />  
+      </q-page>     
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>
+     
 import Panel from './components/Panel.vue'
 import Map from './components/Map.vue'
-
 
 export default {
   name: 'App',
@@ -22,9 +39,5 @@ export default {
 </script>
 
 <style>
-#app {
-  width: 100%;
-  height: 100vh;
-  
-}
+
 </style>
