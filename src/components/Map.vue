@@ -13,10 +13,9 @@ import MapView from "@arcgis/core/views/MapView"
 import MapImageLayer from "@arcgis/core/layers/MapImageLayer"
 import Expand from "@arcgis/core/widgets/Expand";
 
-//in order to have access to the maplayer
-let mapLayer = ''
-let supportingMapLayer = ''
-//TODP:  esri global object
+//global in order to have access to the maplayer
+let esri = { mapLayer: '', supportingMapLayer:''}
+
 
 export default {
   name: 'Map',
@@ -24,14 +23,16 @@ export default {
     SupportingLayers
   },
   computed: {
-    layerSelected () {
+    layerSelected(){
       return this.$store.state.visibleLayer
     },
     supportingMapLayers(){
       return this.$store.state.supportingVisibleLayers
+    },
+    visibleLayerOpacity(){
+      return this.$store.state.visibleLayerOpacity
     }
- 
-   
+    
   },
   watch:{
     layerSelected() {
@@ -39,6 +40,9 @@ export default {
     },
     supportingMapLayers(){
       this.updateSupporting()
+    },
+    visibleLayerOpacity(){
+      this.updateOpacity()
     }
   },
  
@@ -56,23 +60,20 @@ export default {
       container: this.$el
     })
 
-    //add layer and show sublayer selected
-    mapLayer = new MapImageLayer({
+    //TODO:  move these urls to config file
+    esri.mapLayer = new MapImageLayer({
       url: "https://services2.coastalresilience.org/arcgis/rest/services/Washington/Skagit/MapServer",
-      //sublayers: [{id:0, visible: true}],
     })
-    supportingMapLayer = new MapImageLayer({
+    esri.supportingMapLayer = new MapImageLayer({
       url: "https://services2.coastalresilience.org/arcgis/rest/services/Washington/Skagit_Supporting/MapServer",
       sublayers: []
     })
  
-    map.add(mapLayer)
-    map.add(supportingMapLayer)
-
+    map.add(esri.mapLayer)
+    map.add(esri.supportingMapLayer)
    
     let supportingLayersExpand = new Expand({
-      expandIconClass: "esri-icon-layer-list",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
-      // expandTooltip: "Expand LayerList", // optional, defaults to "Expand" for English locale
+      expandIconClass: "esri-icon-layer-list",  
       view: mapView,
       content: document.getElementById('supportingLayers')
     })
@@ -82,20 +83,25 @@ export default {
 
   methods: {
     updateMap(){
-      mapLayer.sublayers = [{id: this.layerSelected}] 
+      if (this.layerSelected !== 'none' ){
+        console.log(this.layerSelected)
+        esri.mapLayer.sublayers = [{id: this.layerSelected}] 
+      }
+      else{
+        esri.mapLayer.sublayers = []
+      }
     },
 
     updateSupporting(){
       let sublayers = []
       this.supportingMapLayers.forEach((layer)=>{
         sublayers.push({id:layer, visible:true})
-
       })
 
-      supportingMapLayer.sublayers = sublayers
-      
-      //[{"id": 4, visible: true},{"id": 3, visible: true},{"id": 2, visible: true},{"id": 0, visible: true}]
-
+      esri.supportingMapLayer.sublayers = sublayers
+    },
+    updateOpacity(){
+      esri.mapLayer.opacity = this.visibleLayerOpacity
     }
   }     
 }

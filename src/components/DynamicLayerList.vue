@@ -1,12 +1,23 @@
 <template>
   <q-separator style="margin:16px 0 16px 0" spaced />
   <p class="text-subtitle2 q-mb-none"> Model Layers: </p>
-  <p v-if="$store.state.selectedLayerList.length>0">Select a layer to view or use the layer controls to remove layers and set transparency</p>
+  <div v-if="$store.state.selectedLayerList.length>0">
+    <p>Select a layer to view or use the layer controls to remove layers</p>
+    <p>Set transparency:</p>
+        <q-item-section>
+          <q-slider
+            v-model="transparency"
+            :min="0"
+            :max="1"
+            :step=".1"
+            label
+           />
+        </q-item-section>
+   </div>
   <div class="q-pl-md q-pr-md scroll" style="height: calc(100vh - 460px)" @scroll="scrollHandler">
     <q-card class="q-ma-xs card" bordered  @click="cardSelected(layer,index)"
       v-for="layer, index in $store.state.selectedLayerList"
       :key="index"
-      :id="index"
       v-bind:class="{active: (index === selected) ? true : false}">
       <q-card-section>
         <div class="row">
@@ -16,7 +27,8 @@
             {{layer.layerNameThird}} <br/>
           </div>
           <div class="col-2 text-center">
-            <q-btn @click="removeItem(layer,index)" flat round color="red" icon="delete" size="10px" />
+            <!-- adding .stop to click event prevents parent click event from firing when butn is clicked-->
+            <q-btn @click.stop="removeItem(layer,index)" flat round color="red" icon="delete" size="10px" />
           </div>
         </div>
       </q-card-section>
@@ -32,44 +44,29 @@ export default {
   data(){
     return {
       selected: 0,
-      selectedLayerNum: 0,
       isActive: false,
+      transparency: 100
     }
-  },
-  computed: {
-    //watch for when a new layer is added to make it active
-    selectedLayerListLength () {
-      return this.$store.state.selectedLayerList.length
-    },
   },
   watch: {
-    selectedLayerNum: function () {
-      console.log('is pickingup')
-      if (Number.isInteger(this.selectedLayerNum )){
-        this.$store.commit('updateVisibleLayer', this.selectedLayerNum)
-      }
-    },
-    selectedLayerListLength: function(){
-      //new items are at the top of the list
-      this.selected = 0
-      //now access its layer num and update here
-      if (this.$store.state.selectedLayerList.length>0){
-        this.selectedLayerNum = this.$store.state.selectedLayerList[0].layerNum
-      }
+    transparency (){
+        this.$store.commit('updateVisibleLayerOpacity', this.transparency)
     }
-  
   },
   methods:{
     cardSelected(layer,index){
-      this.selectedLayerNum = layer.layerNum
+      //make the selected item active
       this.selected = index
+      //update visible layer on map
+      let setLayer = (this.$store.state.selectedLayerList.length > 0) ? layer.layerNum : 'none'
+      this.$store.commit('updateVisibleLayer', setLayer)
     },
-    removeItem(layer, index){
-      //if Iremove last item, it does not remove it from the map i dont know why
-      console.log(layer, index)
-      this.selectedLayerNum = layer.layerNum
-      this.selected = 0
+    removeItem(layer){
+      //remove layer from the list
       this.$store.commit('removeLayer', layer.layerNum)
+      //set the selected item to the first layer in the list
+      this.cardSelected(this.$store.state.selectedLayerList[0], 0)
+    
     }
   }
 
@@ -86,7 +83,6 @@ export default {
 
 .active {
   border: 2px solid #1976D2;
-  background: 
 }
 
 </style>

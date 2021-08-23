@@ -5,6 +5,7 @@ export default createStore({
   state: {
     selectorInfo: [],
     visibleLayer: '',
+    visibleLayerOpacity: 100,
     selectedLayerList: [],
     supportingLayers: '',
     supportingVisibleLayers: []
@@ -24,11 +25,13 @@ export default createStore({
       state.visibleLayer = num
     },
     updateSupportingLayers(state, obj){
-      console.log(obj)
       state.supportingLayers = obj
     },
     updateSupportingVisibleLayers(state, arr){
       state.supportingVisibleLayers = arr
+    },
+    updateVisibleLayerOpacity(state,num){
+      state.visibleLayerOpacity = num
     }
   },
    
@@ -96,7 +99,6 @@ export default createStore({
                   let children = []
                   // if the sublayer has children populate its child array
                   if(sublayerObject[0].subLayers.length >0){
-                    console.log('sublayer has sublayers')
                     sublayerObject[0].subLayers.forEach((sublayer)=>{
                     children.push({label: sublayer.name, children: [], id: sublayer.id})
                     })

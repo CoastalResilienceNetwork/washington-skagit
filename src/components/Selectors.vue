@@ -126,6 +126,7 @@ export default {
       }
     },
     methods: {
+      //TODO:  re-build the selector info so we do not need to maniupulate the data here
       //format data for dropdown 2
       buildSelect2(){
         this.selected2=''; this.selected3=''
@@ -133,6 +134,7 @@ export default {
         this.selected1.second.forEach(element => list2.push({"label": Object.keys(element)[0], "third": element[Object.keys(element)[0]]}))
         this.list2 = list2      
       },
+      //format data for dropdown 3
       buildSelect3(){
         this.selected3=''
         let list3 = []
