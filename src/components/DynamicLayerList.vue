@@ -1,20 +1,27 @@
 <template>
-  <q-separator style="margin:16px 0 16px 0" spaced />
+<p><q-separator spaced /></p>
   <p class="text-subtitle2 q-mb-none"> Model Layers: </p>
   <div v-if="$store.state.selectedLayerList.length>0">
-    <p>Select a layer to view or use the layer controls to remove layers</p>
-    <p>Set transparency:</p>
-        <q-item-section>
+    <p>Select a layer to view or use the layer controls to remove layers or set transparency</p>
+      <q-item>
+        <q-item-section avatar class="q-pl-xl">
+          <q-tooltip anchor="top middle" self="bottom middle" :offset="[1, 1]">
+          Set Transparency
+          </q-tooltip>
+          <q-icon color="primary" name="opacity" />
+        </q-item-section>
+        <q-item-section  class="q-pr-xl"> 
           <q-slider
             v-model="transparency"
             :min="0"
             :max="1"
             :step=".1"
             label
-           />
+          />
         </q-item-section>
+      </q-item>
    </div>
-  <div class="q-pl-md q-pr-md scroll" style="height: calc(100vh - 460px)" @scroll="scrollHandler">
+  <div class="q-pl-md q-pr-md">
     <q-card class="q-ma-xs card" bordered  @click="cardSelected(layer,index)"
       v-for="layer, index in $store.state.selectedLayerList"
       :key="index"
@@ -45,7 +52,7 @@ export default {
     return {
       selected: 0,
       isActive: false,
-      transparency: 100
+      transparency: 1
     }
   },
   watch: {
@@ -66,10 +73,8 @@ export default {
       this.$store.commit('removeLayer', layer.layerNum)
       //set the selected item to the first layer in the list
       this.cardSelected(this.$store.state.selectedLayerList[0], 0)
-    
     }
   }
-
 }
 </script>
 

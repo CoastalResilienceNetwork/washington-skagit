@@ -8,7 +8,7 @@ export default createStore({
     visibleLayerOpacity: 100,
     selectedLayerList: [],
     supportingLayers: '',
-    supportingVisibleLayers: []
+    supportingLayersSkip:[2,3]
    },
   mutations: {
     updateSelectorInfo(state, obj){
@@ -82,38 +82,55 @@ export default createStore({
     requestSupportingLayers(context){
       esriRequest("https://services2.coastalresilience.org/arcgis/rest/services/Washington/Skagit_Supporting/MapServer" + "/layers?f=pjson", {responseType: "json"}).then(function (response) {
         let layerJson = response.data.layers
-        let layerList = []
-        let sublayerList = []
-        layerJson.forEach((l) => {
-          //TODO: Add the skip layers // if (context.skipLayers.indexOf(l.id) == -1){
-          // ONLY NESTED 3 DEEP!
-          // Group Layers with no parents
-          if (l.type == "Group Layer" && !l.parentLayer){
-            sublayerList = []
-              if(l.subLayers){
-              //find the sublayer object
-                l.subLayers.forEach((sl)=>{
-                  let sublayerObject = layerJson.filter( obj => {
-                      return obj.id === sl.id
-                  })
-                  let children = []
-                  // if the sublayer has children populate its child array
-                  if(sublayerObject[0].subLayers.length >0){
-                    sublayerObject[0].subLayers.forEach((sublayer)=>{
-                    children.push({label: sublayer.name, children: [], id: sublayer.id})
-                    })
-                  }
-                  sublayerList.push({label: sl.name + "(" + sl.id +")", children: children, id: sl.id})
-                })
-              }
-            
-              layerList.push({label: l.name +"(" + l.id +")", children: sublayerList, id: l.id, noTick: true})
-          }
-        })
-        context.commit('updateSupportingLayers', layerList)
-      })
-    }
+        let obj = []
+        let storeNodes = []
 
+        layerJson.forEach((l) => {
+          // add layer to layer viewer if it's id is not present in the skip array
+          if (context.state.supportingLayersSkip.indexOf(l.id) == -1){
+              // Group Layer with no parent
+             if (l.type == "Group Layer" && !l.parentLayer){
+                obj.push({label: l.name +"(" + l.id +")", children: [], id: l.id, noTick: true})
+                //find the index of the parent in the object list
+                let parentIndex = obj.findIndex(( obj => obj.id == l.id))
+                //save the parent node to the store
+                storeNodes.push({parentIndex: parentIndex, parentLoc: obj[parentIndex], parentId: l.id})
+               }
+              // featurel layer with parent
+             if (l.type !== "Group Layer" && l.parentLayer){
+                    //find the location of the parent in the node lookup
+                    let nodesIndex = storeNodes.findIndex(( obj => obj.parentId == l.parentLayer.id)) 
+                    //set the location of the parent
+                    let parentLoc = storeNodes[nodesIndex].parentLoc 
+                    //push the child to the parent            
+                    parentLoc.children.push({label: l.name +"(" + l.id +")", children: [], id: l.id})
+              }
+              // group layer with parent
+             if (l.type == "Group Layer" && l.parentLayer){
+                //find the location of the parent in the node lookup
+                let nodesIndex = storeNodes.findIndex(( obj => obj.parentId == l.parentLayer.id)) 
+                //set the location of the parent
+                let parentLoc = storeNodes[nodesIndex].parentLoc 
+                //push the new parent into the found parent as child
+                parentLoc.children.push({label: l.name +"(" + l.id +")", children: [], id: l.id, noTick:true})
+                //find the index of the child we just pushed
+                let parentIndex = parentLoc.children.findIndex(( obj => obj.id == l.id))   
+                //set the parentLoc to that location           
+                parentLoc = parentLoc.children[parentIndex]
+                //store the parent in the nodes
+                storeNodes.push({parentIndex: parentIndex, parentLoc: parentLoc, parentId: l.id})
+             }
+              // feature layer with no parent length = number of nodes
+              if (l.type !== "Group Layer" && !l.parentLayer){
+                  obj.push({label: l.name +"(" + l.id +")", children: [], id: l.id})
+              }
+            }
+          })
+          context.commit('updateSupportingLayers', obj)
+      })
+      
+    }
+  
   },
 
   modules: {

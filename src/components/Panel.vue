@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pr-md" id="panel">
+  <div class="q-pr-md scroll" style="height: calc(100vh - 83px)" @scroll="scrollHandler" id="panel">
     <Selectors />
   </div>
 </template>

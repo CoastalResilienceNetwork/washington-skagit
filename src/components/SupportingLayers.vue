@@ -1,5 +1,6 @@
 <template>
-  <div style="width: 400px; background-color: white;" class="q-pa-md" v-if="$store.state.supportingLayers">
+  <div style="width: 400px; background-color: white;height:500px" class="q-pa-md" v-if="$store.state.supportingLayers"
+   scroll @scroll="scrollHandler">
          {{ticked}}
     <q-tree class="background"
       :nodes="$store.state.supportingLayers"
