@@ -1,34 +1,23 @@
 <template>
-  <q-layout view="lHh lpR lFf">
-    <q-header reveal elevated class="bg-primary text-white">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
-           SKAGIT BAY, WASHINGTON
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
-    <q-page-container>
-      <router-view />
-         <q-page class="q-pa-md row">
-         <Panel class="col-4" />
-         <Map class="col-8" />  
-      </q-page>     
-    </q-page-container>
-  </q-layout>
+  <the-header></the-header>
+  <div id="panel-map-wrap">
+      <the-side-nav></the-side-nav>
+      <the-map-toggle></the-map-toggle>
+      <the-map></the-map>
+  </div>
 </template>
 
 <script>
      
-import Panel from './components/Panel.vue'
-import Map from './components/Map.vue'
+import TheMap from './components/TheMap.vue'
+import TheHeader from './components/UI/TheHeader.vue'
+import TheMapToggle from './components/UI/TheMapToggle.vue'
+import TheSideNav from './components/UI/TheSideNav.vue'
 
 export default {
   name: 'App',
   components: {
-    Map, Panel
+    TheMap, TheHeader, TheMapToggle, TheSideNav
   },
   mounted() {
     // create data store for the app
@@ -39,5 +28,30 @@ export default {
 </script>
 
 <style>
-
+#panel-map-wrap{
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 49px);
+    width: 100vw;
+}
+@media screen and (max-width: 700px){
+  #panel-map-wrap {
+    flex-direction: column-reverse;
+    height: calc(94%);
+  }
+  #side-nav{
+    width:100%;
+    height: 45%;
+   }
+   #map-div{
+    height:55%;
+   }
+   .esri-view-width-xsmall .esri-expand--auto .esri-expand__mask--expanded {
+    display: none;
+   }
+  .esri-view-width-xsmall .esri-expand--auto .esri-expand__container--expanded {
+    top: 60px;
+    height: 45%;
+  }
+}
 </style>

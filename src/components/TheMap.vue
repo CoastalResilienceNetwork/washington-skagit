@@ -18,7 +18,7 @@ let esri = { mapLayer: '', supportingMapLayer:''}
 
 
 export default {
-  name: 'Map',
+  name: 'TheMap',
   components: {
     SupportingLayers
   },
@@ -112,5 +112,11 @@ export default {
 <style scoped>
 @import "https://js.arcgis.com/4.20/@arcgis/core/assets/esri/themes/dark/main.css";
 
-
+#map{
+  flex: 1;
+  min-height: 40vh;
+  width: 100%;
+  position: relative;
+  border-bottom: #999 solid 1pt;
+}
 </style>

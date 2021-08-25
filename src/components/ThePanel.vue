@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pr-md scroll" style="height: calc(100vh - 83px)" @scroll="scrollHandler" id="panel">
+  <div @scroll="scrollHandler" id="panel">
     <Selectors />
   </div>
 </template>
@@ -9,7 +9,7 @@
 import Selectors from './Selectors.vue'
 
 export default {
-  name: 'Panel',
+  name: 'ThePanel',
   components: {
     Selectors,
 
@@ -19,6 +19,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-
+  #panel{
+    position: relative;
+    height: calc(100% - 2px);
+    overflow-y: auto;
+    display: block;
+    width: 100%;
+  }
 </style>

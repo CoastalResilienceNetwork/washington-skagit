@@ -8,7 +8,9 @@ export default createStore({
     visibleLayerOpacity: 100,
     selectedLayerList: [],
     supportingLayers: '',
-    supportingLayersSkip:[2,3]
+    supportingLayersSkip:[2,3],
+    showControls: true,
+    hideControls: false
    },
   mutations: {
     updateSelectorInfo(state, obj){
