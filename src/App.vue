@@ -19,6 +19,30 @@
          <Map class="col-8" />  
       </q-page>     
     </q-page-container>
+  <!-- INTRO DIALOG -->
+    <q-dialog v-model="introDialog" full-width full-height>
+      <q-card>
+        <q-toolbar>
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg">
+          </q-avatar>
+
+          <q-toolbar-title><span class="text-weight-bold">TNC,</span> Washington</q-toolbar-title>
+         
+         
+          <q-btn flat round dense icon="close" v-close-popup />
+        </q-toolbar>
+         
+
+        <q-card-section class="text-center items-center">
+          <h5 class="q-title text-primary">Hydrolic Models for Selected Projects in Skagit Bay</h5>
+           <p>Image?</p>
+           <div style="border 2px black;width:200px"> </div>
+          ! Need intro content here <br/>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </q-layout>
 </template>
 
@@ -31,6 +55,12 @@ export default {
   name: 'App',
   components: {
     Map, Panel
+  },
+  data(){
+    return{
+      introDialog: true
+    }
+      
   },
   mounted() {
     // create data store for the app
