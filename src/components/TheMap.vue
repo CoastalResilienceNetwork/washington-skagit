@@ -110,7 +110,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-@import "https://js.arcgis.com/4.20/@arcgis/core/assets/esri/themes/dark/main.css";
+@import "https://js.arcgis.com/4.20/@arcgis/core/assets/esri/themes/light/main.css";
 
 #map{
   flex: 1;

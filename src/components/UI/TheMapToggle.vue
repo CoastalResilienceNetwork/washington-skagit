@@ -29,9 +29,9 @@ export default {
 <style scoped>
 #map-toggle {
     width: 20px;
-    background: #6b6b6b;
+    background: #ccc;
     font-size: 14px;
-    color: #ccc;
+    color: #6b6b6b;
     text-align: center;
     box-shadow: 7px 0px 8px -2px rgb(51 51 51 / 42%);
     z-index: 2;
@@ -41,7 +41,7 @@ export default {
     cursor: pointer;
 }
 #map-toggle:hover{
-   color: #ffffff;
+   color: #444;
 }
 .landscape-toggle {
     display: block;
