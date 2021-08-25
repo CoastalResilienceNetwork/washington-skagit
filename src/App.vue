@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="lHh lpR lFf">
+  <q-layout view="hHh lpR fFf">
     <q-header reveal elevated class="bg-primary text-white">
       <q-toolbar>
         <q-toolbar-title>
@@ -12,12 +12,23 @@
         </q-toolbar-subtitle>
       </q-toolbar>
     </q-header>
+      <q-drawer
+        v-model="drawerLeft"
+        show-if-above
+        :width="400"
+        :breakpoint="700"
+        elevated
+        class=""
+      >
+        <q-scroll-area class="fit">
+          <div class="q-pa-sm">
+             <Panel />
+          </div>
+        </q-scroll-area>
+      </q-drawer>
+
     <q-page-container>
-      <router-view />
-         <q-page class="q-pa-md row">
-         <Panel class="col-4" />
-         <Map class="col-8" />  
-      </q-page>     
+      <Map />  
     </q-page-container>
   <!-- INTRO DIALOG -->
     <q-dialog v-model="introDialog" full-width full-height>

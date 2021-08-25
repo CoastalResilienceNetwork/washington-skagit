@@ -1,5 +1,5 @@
 <template>
-  <div id="map">
+  <div id="map" style="height:93vh">
     <div id="supportingLayers">
       <SupportingLayers />
    </div>
