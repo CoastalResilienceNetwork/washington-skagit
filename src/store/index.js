@@ -15,9 +15,9 @@ export default createStore({
       supportingLayersSkip:[2,3],
       supportingLayersTitle: 'Supporting Layers'
     },
-     // app state info
+      //app state info
       visibleLayer: '',
-      visibleLayerOpacity: 100,
+      visibleLayerOpacity: 1,
       selectedLayerList: [],
       supportingVisibleLayers:[]
    },
