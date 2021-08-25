@@ -1,6 +1,6 @@
 <template>
 <p><q-separator spaced /></p>
-  <p class="text-subtitle2 q-mb-none"> Model Layers: </p>
+  <p class="text-subtitle2 q-mb-none text-primary"> Model Layers: </p>
   <div v-if="$store.state.selectedLayerList.length>0">
     <p>Select a layer to view or use the layer controls to remove layers or set transparency</p>
       <q-item>
@@ -21,7 +21,7 @@
         </q-item-section>
       </q-item>
    </div>
-  <div class="q-pl-md q-pr-md">
+  <div class="q-pl-md q-pr-sm">
     <q-card class="q-ma-xs card" bordered  @click="cardSelected(layer,index)"
       v-for="layer, index in $store.state.selectedLayerList"
       :key="index"
@@ -52,18 +52,21 @@ export default {
     return {
       selected: 0,
       isActive: false,
-      transparency: 1
+      transparency: 1,
+      selectedLayerList: this.$store.state.selectedLayerList
     }
   },
+
   watch: {
     transparency (){
-        this.$store.commit('updateVisibleLayerOpacity', this.transparency)
-    }
+      this.$store.commit('updateVisibleLayerOpacity', this.transparency)
+    },
   },
   methods:{
     cardSelected(layer,index){
       //make the selected item active
       this.selected = index
+      console.log('newitemadded')
       //update visible layer on map
       let setLayer = (this.$store.state.selectedLayerList.length > 0) ? layer.layerNum : 'none'
       this.$store.commit('updateVisibleLayer', setLayer)
@@ -73,7 +76,8 @@ export default {
       this.$store.commit('removeLayer', layer.layerNum)
       //set the selected item to the first layer in the list
       this.cardSelected(this.$store.state.selectedLayerList[0], 0)
-    }
+    },
+   
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div id="map">
-    <div id="supportingLayers" >
+    <div id="supportingLayers">
       <SupportingLayers />
    </div>
   </div>

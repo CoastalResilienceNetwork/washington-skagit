@@ -1,13 +1,11 @@
 <template>
-  <div style="width: 400px; background-color: white;height:500px" class="q-pa-md" v-if="$store.state.supportingLayers"
-   scroll @scroll="scrollHandler">
-         {{ticked}}
-    <q-tree class="background"
-      :nodes="$store.state.supportingLayers"
+  <div  class="q-pa-md background" v-if="$store.state.data.supportingLayers">
+    <h6 class="q-mb-none q-mt-none text-primary">  {{$store.state.config.supportingLayersTitle}}</h6>
+    <q-tree
+      :nodes="$store.state.data.supportingLayers"
       node-key="id"
       tick-strategy="leaf"
       v-model:ticked="ticked"
-      v-model:expanded="expanded"
     />
  
   </div>
@@ -23,15 +21,14 @@ export default {
         return{
             layerList:'',
             activeLayers:[],
-   
-        }
+       }
     },
 
   setup () {
     return {
-      selected: ref([]),
+      //selected: ref([]),
       ticked: ref([]),
-      expanded: ref([]),
+      //expanded: ref([]),
     }
   },
 
@@ -49,6 +46,8 @@ export default {
   background-color: white;
   overflow: auto;
   padding: 20px;
+  max-height: 500px;
+  min-width: 400px;
 }
 
 

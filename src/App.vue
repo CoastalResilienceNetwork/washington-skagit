@@ -6,8 +6,10 @@
           <q-avatar>
             <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
           </q-avatar>
-           SKAGIT BAY, WASHINGTON
+           TNC, WASHINGTON
         </q-toolbar-title>
+        <q-toolbar-subtitle>Hydrolic Models for Selected Projects in Skagit Bay
+        </q-toolbar-subtitle>
       </q-toolbar>
     </q-header>
     <q-page-container>
@@ -32,7 +34,7 @@ export default {
   },
   mounted() {
     // create data store for the app
-    this.$store.dispatch('requestSelectorInfo')
+    this.$store.dispatch('requestSelectorData')
     this.$store.dispatch('requestSupportingLayers')
   }
 }

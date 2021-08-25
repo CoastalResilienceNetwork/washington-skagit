@@ -3,16 +3,30 @@ import esriRequest from "@arcgis/core/request"
 
 export default createStore({
   state: {
-    selectorInfo: [],
-    visibleLayer: '',
-    visibleLayerOpacity: 100,
-    selectedLayerList: [],
-    supportingLayers: '',
-    supportingLayersSkip:[2,3]
+    data: {
+      // data retrieved from web services
+      selctors: [],
+      supportingLayers: []
+    },
+    config: {
+      // config info 
+      skagitMapLayersURL: '',
+      supportingMapLayersURL:'',
+      supportingLayersSkip:[2,3],
+      supportingLayersTitle: 'Supporting Layers'
+    },
+     // app state info
+      visibleLayer: '',
+      visibleLayerOpacity: 100,
+      selectedLayerList: [],
+      supportingVisibleLayers:[]
    },
   mutations: {
-    updateSelectorInfo(state, obj){
-      state.selectorInfo = obj
+    updateSelectorData(state, obj){
+      state.data.selectors = obj
+    },
+    updateSupportingLayers(state, obj){
+      state.data.supportingLayers = obj
     },
     addLayer(state, obj){
       //add to layer list - wanting to add to the top of the card list
@@ -24,9 +38,6 @@ export default createStore({
     updateVisibleLayer(state,num){
       state.visibleLayer = num
     },
-    updateSupportingLayers(state, obj){
-      state.supportingLayers = obj
-    },
     updateSupportingVisibleLayers(state, arr){
       state.supportingVisibleLayers = arr
     },
@@ -36,7 +47,7 @@ export default createStore({
   },
    
   actions: {
-    requestSelectorInfo(context){
+    requestSelectorData(context){
       esriRequest("https://services2.coastalresilience.org/arcgis/rest/services/Washington/Skagit/MapServer/layers?f=pjson", {responseType: "json"}).then(function(response){
         let layerJson = response.data;
         let names = [];
@@ -61,12 +72,13 @@ export default createStore({
                 let match = false;
                 l.second.forEach((s) => {
                     if (s[n.second]){
-                    s[n.second].push([n.third,n.id])
+                     s[n.second].push([n.third,n.id])
                     match = true;
                     }
                 })
                 if (!match){
-                    l.second.push({[n.second]:[[n.third,n.id]]})
+                    l.second.push({[n.second]:[[n.third,n.id]]
+                    })
                 }
                 }
                 else{
@@ -75,7 +87,10 @@ export default createStore({
             }
             })
         })
-        context.commit('updateSelectorInfo', layerInfo)
+       
+     
+        console.log(layerInfo)
+        context.commit('updateSelectorData', layerInfo)
       })
     },
    
@@ -87,11 +102,12 @@ export default createStore({
 
         layerJson.forEach((l) => {
           // add layer to layer viewer if it's id is not present in the skip array
-          if (context.state.supportingLayersSkip.indexOf(l.id) == -1){
+          if (context.state.config.supportingLayersSkip.indexOf(l.id) == -1){
               // Group Layer with no parent
              if (l.type == "Group Layer" && !l.parentLayer){
-                obj.push({label: l.name +"(" + l.id +")", children: [], id: l.id, noTick: true})
-                //find the index of the parent in the object list
+                //push the object to the list 
+                obj.push({label: l.name, children: [], id: l.id, noTick: true})
+                //find the index of the object we just pushed, saves the reference to the location
                 let parentIndex = obj.findIndex(( obj => obj.id == l.id))
                 //save the parent node to the store
                 storeNodes.push({parentIndex: parentIndex, parentLoc: obj[parentIndex], parentId: l.id})
@@ -103,7 +119,7 @@ export default createStore({
                     //set the location of the parent
                     let parentLoc = storeNodes[nodesIndex].parentLoc 
                     //push the child to the parent            
-                    parentLoc.children.push({label: l.name +"(" + l.id +")", children: [], id: l.id})
+                    parentLoc.children.push({label: l.name, children: [], id: l.id})
               }
               // group layer with parent
              if (l.type == "Group Layer" && l.parentLayer){
@@ -112,17 +128,17 @@ export default createStore({
                 //set the location of the parent
                 let parentLoc = storeNodes[nodesIndex].parentLoc 
                 //push the new parent into the found parent as child
-                parentLoc.children.push({label: l.name +"(" + l.id +")", children: [], id: l.id, noTick:true})
+                parentLoc.children.push({label: l.name, children: [], id: l.id, noTick:true})
                 //find the index of the child we just pushed
                 let parentIndex = parentLoc.children.findIndex(( obj => obj.id == l.id))   
-                //set the parentLoc to that location           
+                //save the reference to the location          
                 parentLoc = parentLoc.children[parentIndex]
                 //store the parent in the nodes
                 storeNodes.push({parentIndex: parentIndex, parentLoc: parentLoc, parentId: l.id})
              }
               // feature layer with no parent length = number of nodes
               if (l.type !== "Group Layer" && !l.parentLayer){
-                  obj.push({label: l.name +"(" + l.id +")", children: [], id: l.id})
+                  obj.push({label: l.name, children: [], id: l.id})
               }
             }
           })
