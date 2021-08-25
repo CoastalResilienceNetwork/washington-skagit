@@ -19,7 +19,9 @@ export default createStore({
       visibleLayer: '',
       visibleLayerOpacity: 1,
       selectedLayerList: [],
-      supportingVisibleLayers:[]
+      supportingVisibleLayers:[],
+      showControls: false,
+      hideControls: true
    },
   mutations: {
     updateSelectorData(state, obj){

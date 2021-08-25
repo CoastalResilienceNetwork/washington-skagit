@@ -1,71 +1,23 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-    <q-header reveal elevated class="bg-primary text-white">
-      <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
-           TNC, WASHINGTON
-        </q-toolbar-title>
-        <q-toolbar-subtitle>Hydrolic Models for Selected Projects in Skagit Bay
-        </q-toolbar-subtitle>
-      </q-toolbar>
-    </q-header>
-      <q-drawer
-        v-model="drawerLeft"
-        show-if-above
-        :width="400"
-        :breakpoint="700"
-        elevated
-        class=""
-      >
-        <q-scroll-area class="fit">
-          <div class="q-pa-sm">
-             <Panel />
-          </div>
-        </q-scroll-area>
-      </q-drawer>
-
-    <q-page-container>
-      <Map />  
-    </q-page-container>
-  <!-- INTRO DIALOG -->
-    <q-dialog v-model="introDialog" full-width full-height>
-      <q-card>
-        <q-toolbar>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo.svg">
-          </q-avatar>
-
-          <q-toolbar-title><span class="text-weight-bold">TNC,</span> Washington</q-toolbar-title>
-         
-         
-          <q-btn flat round dense icon="close" v-close-popup />
-        </q-toolbar>
-         
-
-        <q-card-section class="text-center items-center">
-          <h5 class="q-title text-primary">Hydrolic Models for Selected Projects in Skagit Bay</h5>
-           <p>Image?</p>
-           <div style="border 2px black;width:200px"> </div>
-          ! Need intro content here <br/>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
-        </q-card-section>
-      </q-card>
-    </q-dialog>
-  </q-layout>
+  <the-header></the-header>
+  <div id="panel-map-wrap">
+      <the-side-nav></the-side-nav>
+      <the-map-toggle></the-map-toggle>
+      <the-map></the-map>
+  </div>
 </template>
 
 <script>
      
-import Panel from './components/Panel.vue'
-import Map from './components/Map.vue'
+import TheMap from './components/TheMap.vue'
+import TheHeader from './components/UI/TheHeader.vue'
+import TheMapToggle from './components/UI/TheMapToggle.vue'
+import TheSideNav from './components/UI/TheSideNav.vue'
 
 export default {
   name: 'App',
   components: {
-    Map, Panel
+    TheMap, TheHeader, TheMapToggle, TheSideNav
   },
   data(){
     return{
@@ -82,5 +34,30 @@ export default {
 </script>
 
 <style>
-
+#panel-map-wrap{
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 49px);
+    width: 100vw;
+}
+@media screen and (max-width: 700px){
+  #panel-map-wrap {
+    flex-direction: column-reverse;
+    height: calc(94%);
+  }
+  #side-nav{
+    width:100%;
+    height: 45%;
+   }
+   #map-div{
+    height:55%;
+   }
+   .esri-view-width-xsmall .esri-expand--auto .esri-expand__mask--expanded {
+    display: none;
+   }
+  .esri-view-width-xsmall .esri-expand--auto .esri-expand__container--expanded {
+    top: 60px;
+    height: 45%;
+  }
+}
 </style>
