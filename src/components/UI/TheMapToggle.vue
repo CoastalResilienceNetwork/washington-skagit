@@ -1,10 +1,10 @@
 <template>
     <div id="map-toggle" @click="toggleControls">
         <div class="landscape-toggle"> 
-            <span v-if="$store.state.hideControls"><i class="fas fa-chevron-left mar-bottom"></i>HIDE </span> 
-            <span v-if="$store.state.showControls"><i class="fas fa-chevron-right mar-bottom"></i>SHOW </span> 
-            <span v-if="$store.state.hideControls">CONTROLS<i class="fas fa-chevron-left mar-top"></i></span>
-            <span v-if="$store.state.showControls">CONTROLS<i class="fas fa-chevron-right mar-top"></i></span>
+            <span v-if="$store.state.hideControls"><i class="fas fa-chevron-left mar-bottom"></i>HIDE</span> 
+            <span v-if="$store.state.showControls"><i class="fas fa-chevron-right mar-bottom"></i>SHOW</span> 
+            <span v-if="$store.state.hideControls"><i class="fas fa-chevron-left mar-top"></i></span>
+            <span v-if="$store.state.showControls"><i class="fas fa-chevron-right mar-top"></i></span>
         </div>
         <div class="portrait-toggle">
             <span v-if="$store.state.hideControls"><i class="fas fa-chevron-down mar-right"></i>HIDE </span> 
@@ -29,9 +29,9 @@ export default {
 <style scoped>
 #map-toggle {
     width: 20px;
-    background: #ccc;
+    background: var(--q-grey);
     font-size: 14px;
-    color: #6b6b6b;
+    color: var(--q-primary);
     text-align: center;
     box-shadow: 7px 0px 8px -2px rgb(51 51 51 / 42%);
     z-index: 2;
@@ -39,6 +39,7 @@ export default {
     text-orientation: upright;
     padding-top: 10px;
     cursor: pointer;
+    border-left: 1pt solid var(--q-primary);
 }
 #map-toggle:hover{
    color: #444;
@@ -69,6 +70,8 @@ export default {
         text-orientation: unset;
         padding-top: 4px;
         font-size: 14px;
+        border-left: none;
+        border-bottom: 1pt solid var(--q-primary);
     }
     .portrait-toggle{
         display: block;
