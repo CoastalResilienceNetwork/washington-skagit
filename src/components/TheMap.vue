@@ -112,11 +112,14 @@ export default {
     },
 
     updateSupportingVisibility(){
-      //find the layer in the list of sublayers and update its opacity
-      this.supportingMapVisibleLayers.forEach((layer) => {
-        let i = this.sublayers.findIndex(item => item.id == layer)
-        this.sublayers[i].visible = true
-    })
+     this.sublayers.forEach((layer, index) => {
+        if (this.supportingMapVisibleLayers.includes(layer.id)){
+          this.sublayers[index].visible = true
+        }
+        else{
+           this.sublayers[index].visible = false
+        }
+      })
      
       //push the updated list to the map
       esri.supportingMapLayer.sublayers = this.sublayers
