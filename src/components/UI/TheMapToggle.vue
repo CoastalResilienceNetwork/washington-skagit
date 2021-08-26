@@ -1,10 +1,10 @@
 <template>
     <div id="map-toggle" @click="toggleControls">
-        <div class="landscape-toggle"> 
-            <span v-if="$store.state.hideControls"><i class="fas fa-chevron-left mar-bottom"></i>HIDE</span> 
-            <span v-if="$store.state.showControls"><i class="fas fa-chevron-right mar-bottom"></i>SHOW</span> 
-            <span v-if="$store.state.hideControls"><i class="fas fa-chevron-left mar-top"></i></span>
-            <span v-if="$store.state.showControls"><i class="fas fa-chevron-right mar-top"></i></span>
+        <div class="half-circle"> 
+           <div v-if="$store.state.hideControls"><i class="fas fa-chevron-left"></i> HIDE <i class="fas fa-chevron-left"></i></div>
+            <span v-if="$store.state.showControls"><i class="fas fa-chevron-right"></i> SHOW <i class="fas fa-chevron-right"></i></span> 
+            <!--span v-if="$store.state.hideControls">CONTROLS<i class="fas fa-chevron-left mar-top"></i></span>
+            <span v-if="$store.state.showControls">CONTROLS<i class="fas fa-chevron-right mar-top"></i></span-->
         </div>
         <div class="portrait-toggle">
             <span v-if="$store.state.hideControls"><i class="fas fa-chevron-down mar-right"></i>HIDE </span> 
