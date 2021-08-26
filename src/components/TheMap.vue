@@ -1,5 +1,5 @@
 <template>
-  <div id="map" style="height:92vh">
+  <div id="map">
     <div id="supportingLayers">
       <SupportingLayers />
    </div>
@@ -22,15 +22,27 @@ export default {
   components: {
     SupportingLayers
   },
+  data() {
+    return{
+      sublayers: {} // this item is returned from the store and updated with visibility and opacity in the map component
+    }
+  },
   computed: {
     layerSelected(){
       return this.$store.state.visibleLayer
     },
-    supportingMapLayers(){
+    supportingMapVisibleLayers(){
       return this.$store.state.supportingVisibleLayers
     },
     visibleLayerOpacity(){
       return this.$store.state.visibleLayerOpacity
+    },
+    supportingVisibleLayerOpacity(){
+      //returns object {value: val, id: id}
+      return this.$store.state.supportingVisibleLayerOpacity
+    },
+    supportingSublayerList(){
+       return this.$store.state.data.supportingSublayerList
     }
     
   },
@@ -38,12 +50,19 @@ export default {
     layerSelected() {
       this.updateMap()
     },
-    supportingMapLayers(){
-      this.updateSupporting()
+    supportingMapVisibleLayers(){
+      this.updateSupportingVisibility()
     },
     visibleLayerOpacity(){
       this.updateOpacity()
+    },
+    supportingVisibleLayerOpacity(){
+      this.updateSupportingOpacity()
+    },
+    supportingSublayerList(){
+      this.addSupportingLayers()
     }
+
   },
  
   mounted() {
@@ -92,16 +111,34 @@ export default {
       }
     },
 
-    updateSupporting(){
-      let sublayers = []
-      this.supportingMapLayers.forEach((layer)=>{
-        sublayers.push({id:layer, visible:true})
-      })
-
-      esri.supportingMapLayer.sublayers = sublayers
+    updateSupportingVisibility(){
+      //find the layer in the list of sublayers and update its opacity
+      this.supportingMapVisibleLayers.forEach((layer) => {
+        let i = this.sublayers.findIndex(item => item.id == layer)
+        this.sublayers[i].visible = true
+    })
+     
+      //push the updated list to the map
+      esri.supportingMapLayer.sublayers = this.sublayers
     },
+
     updateOpacity(){
       esri.mapLayer.opacity = this.visibleLayerOpacity
+    },
+
+    updateSupportingOpacity(){
+    
+      //find the layer in the list of sublayers and update its opacity
+      let i = this.sublayers.findIndex(item => item.id == this.supportingVisibleLayerOpacity.id)
+      this.sublayers[i].opacity = this.supportingVisibleLayerOpacity.value
+      //ppush the updated list to the map
+      esri.supportingMapLayer.sublayers = this.sublayers
+      
+    },
+    addSupportingLayers(){
+      //add all layers to the map with visibility false
+      esri.supportingMapLayer.sublayers = this.supportingSublayerList
+      this.sublayers = this.supportingSublayerList
     }
   }     
 }

@@ -6,20 +6,22 @@ export default createStore({
     data: {
       // data retrieved from web services
       selctors: [],
-      supportingLayers: []
+      supportingLayers: [],  //used to create the supportinglayer tree
+      supportingSublayerList: [] //used to add all layers to the map
     },
     config: {
       // config info 
       skagitMapLayersURL: '',
       supportingMapLayersURL:'',
-      supportingLayersSkip:[2,3],
+      supportingLayersSkip:[],
       supportingLayersTitle: 'Supporting Layers'
     },
-      //app state info
+      // app state info
       visibleLayer: '',
       visibleLayerOpacity: 1,
       selectedLayerList: [],
-      supportingVisibleLayers:[],
+      supportingVisibleLayers:[], // when user ticks the layer, make it visible
+      supportingVisibleLayerOpacity: {},
       showControls: false,
       hideControls: true
    },
@@ -29,6 +31,9 @@ export default createStore({
     },
     updateSupportingLayers(state, obj){
       state.data.supportingLayers = obj
+    },
+    updateSupportingSublayerList(state, obj){
+      state.data.supportingSublayerList = obj
     },
     addLayer(state, obj){
       //add to layer list - wanting to add to the top of the card list
@@ -45,6 +50,9 @@ export default createStore({
     },
     updateVisibleLayerOpacity(state,num){
       state.visibleLayerOpacity = num
+    },
+    updateSupportingLayerVisibleOpacity(state, obj){
+      state.supportingVisibleLayerOpacity = obj
     }
   },
    
@@ -101,6 +109,7 @@ export default createStore({
         let layerJson = response.data.layers
         let obj = []
         let storeNodes = []
+        let supportingSublayerList = []
 
         layerJson.forEach((l) => {
           // add layer to layer viewer if it's id is not present in the skip array
@@ -111,7 +120,7 @@ export default createStore({
                 obj.push({label: l.name, children: [], id: l.id, noTick: true})
                 //find the index of the object we just pushed, saves the reference to the location
                 let parentIndex = obj.findIndex(( obj => obj.id == l.id))
-                //save the parent node to the store
+                //save the parent node to the store with reference to its location in the object
                 storeNodes.push({parentIndex: parentIndex, parentLoc: obj[parentIndex], parentId: l.id})
                }
               // featurel layer with parent
@@ -121,7 +130,8 @@ export default createStore({
                     //set the location of the parent
                     let parentLoc = storeNodes[nodesIndex].parentLoc 
                     //push the child to the parent            
-                    parentLoc.children.push({label: l.name, children: [], id: l.id})
+                    parentLoc.children.push({label: l.name, children: [], body: 'toggle', id: l.id, description: l.description})
+                    supportingSublayerList.push({id:l.id, visible:false, opacity: 1})
               }
               // group layer with parent
              if (l.type == "Group Layer" && l.parentLayer){
@@ -135,15 +145,17 @@ export default createStore({
                 let parentIndex = parentLoc.children.findIndex(( obj => obj.id == l.id))   
                 //save the reference to the location          
                 parentLoc = parentLoc.children[parentIndex]
-                //store the parent in the nodes
+                //save the parent node to the store with reference to its location in the object
                 storeNodes.push({parentIndex: parentIndex, parentLoc: parentLoc, parentId: l.id})
              }
               // feature layer with no parent length = number of nodes
               if (l.type !== "Group Layer" && !l.parentLayer){
-                  obj.push({label: l.name, children: [], id: l.id})
+                  obj.push({label: l.name, children: [], body: 'toggle', id: l.id, description: l.description})
+                  supportingSublayerList.push({id:l.id, visible:false, opacity: 1})
               }
             }
           })
+          context.commit('updateSupportingSublayerList', supportingSublayerList)
           context.commit('updateSupportingLayers', obj)
       })
       

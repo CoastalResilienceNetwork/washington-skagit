@@ -1,6 +1,11 @@
 <template>
 <p><q-separator spaced /></p>
   <p class="text-subtitle2 q-mb-none text-primary"> Model Layers: </p>
+  <div v-if="$store.state.selectedLayerList.length==0">
+  <q-card class="q-ma-xs q-pa-lg" flat bordered>
+    <p class="text-grey text-center">There are no simulations to display</p>
+    </q-card>
+  </div>
   <div v-if="$store.state.selectedLayerList.length>0">
     <p>Select a layer to view or use the layer controls to remove layers or set transparency</p>
       <q-item>
@@ -91,7 +96,7 @@ export default {
 }
 
 .active {
-  border: 2px solid #1976D2;
+  border: 2px solid var(--q-primary);
 }
 
 </style>

@@ -1,10 +1,10 @@
 <template>
     <div id="map-toggle" @click="toggleControls">
-        <div class="landscape-toggle"> 
-            <span v-if="$store.state.hideControls"><i class="fas fa-chevron-left mar-bottom"></i>HIDE </span> 
-            <span v-if="$store.state.showControls"><i class="fas fa-chevron-right mar-bottom"></i>SHOW </span> 
-            <span v-if="$store.state.hideControls">CONTROLS<i class="fas fa-chevron-left mar-top"></i></span>
-            <span v-if="$store.state.showControls">CONTROLS<i class="fas fa-chevron-right mar-top"></i></span>
+        <div class="half-circle"> 
+           <div v-if="$store.state.hideControls"><i class="fas fa-chevron-left"></i> HIDE <i class="fas fa-chevron-left"></i></div>
+            <span v-if="$store.state.showControls"><i class="fas fa-chevron-right"></i> SHOW <i class="fas fa-chevron-right"></i></span> 
+            <!--span v-if="$store.state.hideControls">CONTROLS<i class="fas fa-chevron-left mar-top"></i></span>
+            <span v-if="$store.state.showControls">CONTROLS<i class="fas fa-chevron-right mar-top"></i></span-->
         </div>
         <div class="portrait-toggle">
             <span v-if="$store.state.hideControls"><i class="fas fa-chevron-down mar-right"></i>HIDE </span> 
@@ -27,17 +27,26 @@ export default {
 </script>
 
 <style scoped>
+.half-circle {
+    margin-right: -21px;
+    margin-top: 30%;
+    padding: 2px;
+    height: 150px;
+    background-color:var(--q-primary);
+    border-bottom-right-radius: 110px;
+    border-top-right-radius: 110px;
+}
+
 #map-toggle {
-    width: 20px;
-    background: #ccc;
-    font-size: 14px;
-    color: #6b6b6b;
+    width: 2px;
+    background: var(--q-primary);
+    font-size: 12px;
+    color: white;
     text-align: center;
     box-shadow: 7px 0px 8px -2px rgb(51 51 51 / 42%);
     z-index: 2;
     writing-mode: vertical-rl;
     text-orientation: upright;
-    padding-top: 10px;
     cursor: pointer;
 }
 #map-toggle:hover{
@@ -76,5 +85,6 @@ export default {
     .landscape-toggle{
         display: none;
     }
+
 }
 </style>
