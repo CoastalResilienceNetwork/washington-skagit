@@ -38,17 +38,16 @@ export default {
 }
 
 #map-toggle {
-    width: 20px;
-    background: var(--q-grey);
-    font-size: 14px;
-    color: var(--q-primary);
+    width: 2px;
+    background: var(--q-primary);
+    font-size: 12px;
+    color: white;
     text-align: center;
     box-shadow: 7px 0px 8px -2px rgb(51 51 51 / 42%);
     z-index: 2;
     writing-mode: vertical-rl;
     text-orientation: upright;
     cursor: pointer;
-    border-left: 1pt solid var(--q-primary);
 }
 #map-toggle:hover{
    color: #444;
@@ -79,8 +78,6 @@ export default {
         text-orientation: unset;
         padding-top: 4px;
         font-size: 14px;
-        border-left: none;
-        border-bottom: 1pt solid var(--q-primary);
     }
     .portrait-toggle{
         display: block;
