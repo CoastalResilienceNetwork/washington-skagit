@@ -27,6 +27,16 @@ export default {
 </script>
 
 <style scoped>
+.half-circle {
+    margin-right: -21px;
+    margin-top: 30%;
+    padding: 2px;
+    height: 150px;
+    background-color:var(--q-primary);
+    border-bottom-right-radius: 110px;
+    border-top-right-radius: 110px;
+}
+
 #map-toggle {
     width: 20px;
     background: var(--q-grey);
@@ -37,7 +47,6 @@ export default {
     z-index: 2;
     writing-mode: vertical-rl;
     text-orientation: upright;
-    padding-top: 10px;
     cursor: pointer;
     border-left: 1pt solid var(--q-primary);
 }
@@ -79,5 +88,6 @@ export default {
     .landscape-toggle{
         display: none;
     }
+
 }
 </style>

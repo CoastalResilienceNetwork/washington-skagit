@@ -1,0 +1,2 @@
+body {margin: 0; padding: 0;  overflow: hidden;}
+.esri-view .esri-view-surface--inset-outline:focus::after {  outline: none !important;}

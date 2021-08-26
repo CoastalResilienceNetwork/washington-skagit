@@ -19,9 +19,15 @@ export default {
   components: {
     TheMap, TheHeader, TheMapToggle, TheSideNav
   },
+  data(){
+    return{
+      introDialog: true
+    }
+      
+  },
   mounted() {
     // create data store for the app
-    this.$store.dispatch('requestSelectorInfo')
+    this.$store.dispatch('requestSelectorData')
     this.$store.dispatch('requestSupportingLayers')
   }
 }
