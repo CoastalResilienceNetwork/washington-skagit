@@ -25,5 +25,6 @@ export default {
     overflow-y: auto;
     display: block;
     width: 100%;
+    border: 1.5px solid var(--q-primary)
   }
 </style>

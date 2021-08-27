@@ -1,5 +1,5 @@
 <template>
-  <header>SKAGIT BAY, WASHINGTON</header>
+  <header>SKAGIT BAY,<span class="text-secondary"> WASHINGTON</span></header>
 </template>
 
 <script>

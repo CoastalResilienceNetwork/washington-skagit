@@ -14,6 +14,27 @@
       :filter = "filter"
     >
     <template v-slot:body-toggle="prop">
+        <!--div class="q-pa-none">
+          <div class="">
+            <p class="q-mb-none">{{prop.node.description}} </p>
+            <div class="cursor-pointer" style="width: 100px">
+              <q-icon color="accent" name="opacity" size="xs" /> Opacity
+              <q-popup-edit v-model="label" class="" v-slot="scope">
+                <p class="text-secondary q-ma-none">Set Opacity</p>
+                <div class="row items-center">
+                  <div class="col-2" ><q-icon name="opacity" size="xs" color="primary" /></div>
+                  <div class="col-8"><q-slider  v-model="scope.value" @update="setTransparency($event, prop.node.id)" :min="0" :max="1" :step=".1" :model-value="1" label /></div>
+                </div>
+                <q-input dark color="white" v-model="scope.value" dense autofocus counter @keyup.enter="scope.set">
+                  <template v-slot:append>
+                    <q-icon name="edit" />
+                  </template>
+                </q-input>
+              </q-popup-edit>
+            </div>
+        </div>
+       
+      </div-->
     <div class="q-pa-none" style="max-width: 350px">
       <q-list class="">
       <q-expansion-item
@@ -23,19 +44,27 @@
         label="see more"
         header-class="text-secondary"
       >
-        <q-card bordered class="q-pa-sm rounded-borders">
+        <q-card class="q-pa-sm q-ml-md">
+              <p class="q-mb-none">{{prop.node.description}} </p>
           <div class='row items-center q-pa-sm'>
-            <div class="col-1"><q-icon color="primary" name="opacity" size="xs" /></div>
-            <div class="col-11 q-pr-xl"><q-slider @change="setTransparency($event, prop.node.id)" :min="0" :max="1" :step=".1" :model-value="1" label /></div>
+            <div class="col-1"><q-icon color="secondary" name="opacity" size="xs" /></div>
+            <div class="col-11 q-pr-xl"><q-slider  color="secondary" snap dense @change="setTransparency($event, prop.node.id)" :min="0" :max="1" :step=".1" :model-value="1" label /></div>
           </div>
           <div  q-mt-md>
-             <p class="q-mb-none">{{prop.node.description}} </p>
+         
           </div>
            
         </q-card>
       </q-expansion-item>
       </q-list>
     </div>
+    <!--div class="q-pa-none" style="max-width: 350px">
+        <p class="q-mb-none">{{prop.node.description}} </p>
+          <div class='row items-center q-pa-sm'>
+            <div class="col-1"><q-icon color="accent" name="opacity" size="xs" /></div>
+            <div class="col-6 q-pr-xl"><q-slider color="accent" snap dense @change="setTransparency($event, prop.node.id)" :min="0" :max="1" :step=".1" :model-value="1" label /></div>
+          </div>
+     </div-->
 
   
       
@@ -72,7 +101,9 @@ export default {
       resetFilter () {
         filter.value = ''
         filterRef.value.focus()
-      }
+      },
+       label: ref('Click me'),
+      label2: ref('Also click me')
       
     }
   },
@@ -103,5 +134,9 @@ export default {
 
 .esri-widget *:focus-visible, .esri-widget *:focus{
   outline: none;
+}
+
+.q-tree__node-body relative-position{
+  padding:0px !important;
 }
 </style>

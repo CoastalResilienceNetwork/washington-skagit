@@ -22,6 +22,7 @@
             :max="1"
             :step=".1"
             label
+            snap
           />
         </q-item-section>
       </q-item>
@@ -97,7 +98,7 @@ export default {
 }
 
 .active {
-  border: 2px solid var(--q-primary);
+  border: 2px solid var(--q-secondary);
 }
 
 </style>

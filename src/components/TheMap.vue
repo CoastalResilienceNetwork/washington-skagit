@@ -11,7 +11,8 @@ import SupportingLayers from "./SupportingLayers.vue"
 import Map from "@arcgis/core/Map"
 import MapView from "@arcgis/core/views/MapView"
 import MapImageLayer from "@arcgis/core/layers/MapImageLayer"
-import Expand from "@arcgis/core/widgets/Expand";
+import Expand from "@arcgis/core/widgets/Expand"
+import Legend from "@arcgis/core/widgets/Legend"
 
 //global in order to have access to the maplayer
 let esri = { mapLayer: '', supportingMapLayer:''}
@@ -24,7 +25,7 @@ export default {
   },
   data() {
     return{
-      sublayers: {} // this item is returned from the store and updated with visibility and opacity in the map component
+      sublayers: {} // this item is returned from the store and updated with visibility and opacity in the map component only
     }
   },
   computed: {
@@ -98,6 +99,23 @@ export default {
     })
 
     mapView.ui.add(supportingLayersExpand, "top-right")
+
+    let legend = new Legend({
+      view: mapView,
+      layerInfos: [
+              {
+                layer: esri.mapLayer,
+                title: "Simulation Models"
+              },
+               {
+                layer: esri.supportingMapLayer,
+                title: "Supporting Layers"
+              }
+
+    ]});
+    mapView.ui.add(legend, "bottom-left");
+      
+     
   },  
 
   methods: {
@@ -112,6 +130,7 @@ export default {
     },
 
     updateSupportingVisibility(){
+     
      this.sublayers.forEach((layer, index) => {
         if (this.supportingMapVisibleLayers.includes(layer.id)){
           this.sublayers[index].visible = true
@@ -140,6 +159,8 @@ export default {
     },
     addSupportingLayers(){
       //add all layers to the map with visibility false
+      //this method only gets run once when the map is loaded
+      console.log('run')
       esri.supportingMapLayer.sublayers = this.supportingSublayerList
       this.sublayers = this.supportingSublayerList
     }

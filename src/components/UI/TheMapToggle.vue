@@ -1,6 +1,6 @@
 <template>
     <div id="map-toggle" @click="toggleControls">
-        <div class="half-circle"> 
+        <div class="landscape-toggle"> 
            <div v-if="$store.state.hideControls"><i class="fas fa-chevron-left"></i> HIDE <i class="fas fa-chevron-left"></i></div>
             <span v-if="$store.state.showControls"><i class="fas fa-chevron-right"></i> SHOW <i class="fas fa-chevron-right"></i></span> 
             <!--span v-if="$store.state.hideControls">CONTROLS<i class="fas fa-chevron-left mar-top"></i></span>
@@ -28,15 +28,8 @@ export default {
 
 <style scoped>
 .half-circle {
-    margin-right: -21px;
-    margin-top: 30%;
-    padding: 2px;
-    height: 150px;
-    background-color:var(--q-primary);
-    border-bottom-right-radius: 110px;
-    border-top-right-radius: 110px;
+  
 }
-
 #map-toggle {
     width: 2px;
     background: var(--q-primary);
@@ -54,6 +47,14 @@ export default {
 }
 .landscape-toggle {
     display: block;
+
+    margin-right: -21px;
+    margin-top: 30%;
+    padding: 2px;
+    height: 150px;
+    background-color:var(--q-primary);
+    border-bottom-right-radius: 110px;
+    border-top-right-radius: 110px;
 }
 .portrait-toggle {
     display: none;
@@ -85,6 +86,5 @@ export default {
     .landscape-toggle{
         display: none;
     }
-
 }
 </style>
