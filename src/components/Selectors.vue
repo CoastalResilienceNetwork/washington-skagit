@@ -6,7 +6,7 @@
     <div class='q-pl-md q-pr-sm'>
        <!--for the first select we are looping through the list of objects in the store and displaying the 'first' attribute. 
       the selected value is stored in v-model so on the change event we build the second list from the first selected value-->
-      <p class="text-caption text-red q-mt-sm q-mb-none" v-if="!selected1">Select a simulation</p>
+      <p class="text-caption text-negative q-mt-sm q-mb-none" v-if="!selected1">Select a simulation</p>
       <div class="row items-center">
         <q-select outlined id="select1" class="q-pa-xs col-11" label="Simulation Name" v-model="selected1" 
         :options="$store.state.data.selectors" dense options-dense></q-select>
@@ -16,7 +16,7 @@
       </div>
 
       <!--for the second select, we iterate through second, and build the third list from the second selected item  -->
-      <p class="text-caption text-red q-mt-sm q-mb-none" v-if="!selected2 && selected1">Select a flow &amp; tide</p>
+      <p class="text-caption text-negative q-mt-sm q-mb-none" v-if="!selected2 && selected1">Select a flow &amp; tide</p>
       <div class="row items-center" v-if="this.selected1" >
         <q-select outlined id="select2" class="q-pa-xs col-11" v-model="selected2"
         :options="list2" label="Flow (cfs) &amp; Tide (ft)" dense options-dense ></q-select>
@@ -26,7 +26,7 @@
       </div>
       
       <!--the third select iterates through selected2 and stores the final layer number as its value -->
-      <p class="text-caption text-red q-mt-sm q-mb-none" v-if="!selected3 && selected2">Select a model output</p>
+      <p class="text-caption text-negative q-mt-sm q-mb-none" v-if="!selected3 && selected2">Select a model output</p>
       <div class="row items-center" v-if="this.selected2">
         <q-select outlined id="select2" class="q-pa-xs col-11" v-model="selected3" 
         :options="list3" label="Model output (ft)" dense options-dense></q-select>
@@ -38,33 +38,35 @@
 
     <!--DIALOGS -->
     <q-dialog v-model="dialogDisplay1">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">Simulation Info</div>
+      <q-card style="max-width:1000px">
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6 text-primary">Simulation</div>
+          <q-space />
+          <q-btn icon="close" color="primary" flat round dense v-close-popup />
         </q-card-section>
-
+        <p><q-separator spaced /></p>
         <q-card-section class="q-pt-none">
           Eleven simulations and a baseline were run to model hydraulic impacts of implementing particular projects and project combinations. The baseline represents existing conditions without new project implementation around 2015. 
           <ul>
-            <li><b>Simulation 1: </b><br/>Small Projects, which included these projects: SF Levee Setbacks 2, 3, 4 (dike setback; 55 acres), McGlinn Causeway (hydraulic; 5.8 acres), TNC South Fork (backwater channel; 1.2 acres), Cottonwood Island (hydraulic; 14 acres), East Cottonwood (backwater channel; 3 acres), Pleasant Ridge South (dike setback; 28 acres), Hall Slough (dike setback; 135 acres), Fir Island Farm (dike setback; 138 acres), Telegraph Slough Full (dike setback/hydraulic; 538 acres), Sullivan Hacienda (dike setback; 207 acres), and Rawlins Road Distributary Channel (hydraulic; 5 acres). 
+            <li><span class="text-secondary text-bold">Simulation 1: </span><br/>Small Projects, which included these projects: SF Levee Setbacks 2, 3, 4 (dike setback; 55 acres), McGlinn Causeway (hydraulic; 5.8 acres), TNC South Fork (backwater channel; 1.2 acres), Cottonwood Island (hydraulic; 14 acres), East Cottonwood (backwater channel; 3 acres), Pleasant Ridge South (dike setback; 28 acres), Hall Slough (dike setback; 135 acres), Fir Island Farm (dike setback; 138 acres), Telegraph Slough Full (dike setback/hydraulic; 538 acres), Sullivan Hacienda (dike setback; 207 acres), and Rawlins Road Distributary Channel (hydraulic; 5 acres). 
               </li>
-            <li><b>Simulation 2: </b><br/> Fir Island Cross Island Connector, a major hydraulic project covering 151 acres. 
+            <li><span class="text-secondary text-bold">Simulation 2: </span><br/> Fir Island Cross Island Connector, a major hydraulic project covering 151 acres. 
               </li>
-            <li><b>Simulation 3: </b><br/>Avon-Swinomish Bypass, a major hydraulic project covering 1297 acres. 
+            <li><span class="text-secondary text-bold">Simulation 3: </span><br/>Avon-Swinomish Bypass, a major hydraulic project covering 1297 acres. 
               </li>
-            <li><b>Simulation 4: </b><br/>NF Left Bank Levee Setback C, a major dike setback project covering 279 acres. 
+            <li><span class="text-secondary text-bold">Simulation 4: </span><br/>NF Left Bank Levee Setback C, a major dike setback project covering 279 acres. 
               </li>
-            <li><b>Simulation 5: </b><br/>NF Left Bank Levee Setback A, a major dike setback project covering 284 acres. 
+            <li><span class="text-secondary text-bold">Simulation 5: </span><br/>NF Left Bank Levee Setback A, a major dike setback project covering 284 acres. 
               </li>
-            <li><b>Simulation 6: </b><br/>Moderate Influence Projects-Group 1, which included these projects: NF Right Bank Levee Setback (dike setback; 86 acres), Milltown Island (dike breach; 212 acres), Telegraph Slough 1 (dike setback; 188), and Thein Farm (levee setback; 75 acres). 
+            <li><span class="text-secondary text-bold">Simulation 6: </span><br/>Moderate Influence Projects-Group 1, which included these projects: NF Right Bank Levee Setback (dike setback; 86 acres), Milltown Island (dike breach; 212 acres), Telegraph Slough 1 (dike setback; 188), and Thein Farm (levee setback; 75 acres). 
               </li>
-            <li><b>Simulation 7: </b><br/>Moderate Influence Projects-Group 2, including these projects: Deepwater Slough Phase 2 (dike removal; 265 acres), Rawlins Road (dike setback; 192 acres), and Telegraph Slough 1&amp;2 (dike setback; 305 acres).
+            <li><span class="text-secondary text-bold">Simulation 7: </span><br/>Moderate Influence Projects-Group 2, including these projects: Deepwater Slough Phase 2 (dike removal; 265 acres), Rawlins Road (dike setback; 192 acres), and Telegraph Slough 1&amp;2 (dike setback; 305 acres).
               </li>
-            <li><b>Simulation 8: </b><br/>Selected Projects, selecting all projects except Avon-Swin Bypass and NF Left Bank Levee Setback A. 
+            <li><span class="text-secondary text-bold">Simulation 8: </span><br/>Selected Projects, selecting all projects except Avon-Swin Bypass and NF Left Bank Levee Setback A. 
               </li>
-            <li><b>Simulation 9: </b><br/>Climate Change without projects, representing a climate change scenario with no new project implementation.
+            <li><span class="text-secondary text-bold">Simulation 9: </span><br/>Climate Change without projects, representing a climate change scenario with no new project implementation.
               </li>
-            <li><b>Simulation 10:</b><br/>Climate Change with selected projects, representing a climate change scenario selecting all projects except Avon-Swin Bypass and NF Left Bank Levee Setback A.
+            <li><span class="text-secondary text-bold">Simulation 10:</span><br/>Climate Change with selected projects, representing a climate change scenario selecting all projects except Avon-Swin Bypass and NF Left Bank Levee Setback A.
               </li>
           </ul>
         </q-card-section>
@@ -75,11 +77,15 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="dialogDisplay2">
+    <q-dialog v-model="dialogDisplay2" style="width: 50%">
       <q-card>
-        <q-card-section>
-          <div class="text-h6">Flows and Tides Info</div>
+       
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6 text-primary">Flows and Tides</div>
+          <q-space />
+          <q-btn icon="close" color="primary" flat round dense v-close-popup />
         </q-card-section>
+        <p><q-separator spaced /></p>
 
         <q-card-section class="q-pt-none">
           Information about flows and tides can allow a hydraulic model to estimate water volumes, elevations, and dynamics.
@@ -87,26 +93,24 @@
           Tidal fluctations change water surface elevation (WSE) over the course of a day, and sea level rise is changing and projected to further change tidal WSE this century. Tidal water surface elevations relative to NADV88 vertical datum was assessed for five scenarios: High tide (10.8 ft); High tide with flood scenario only (10.4 ft); High tide with climate change (12.67 ft); Low tide (-3.3 ft); and Low tide with climate change (1.43 ft).
         </q-card-section>
 
-        <q-card-actions align="right">
-          <q-btn flat label="OK" color="primary" v-close-popup />
-        </q-card-actions>
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="dialogDisplay3">
+    <q-dialog v-model="dialogDisplay3" seamless>
       <q-card>
-        <q-card-section>
-          <div class="text-h6">Model Outputs Info</div>
+        
+         <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6 text-primary">Model Outputs</div>
+          <q-space />
+          <q-btn icon="close" color="primary" flat round dense v-close-popup />
         </q-card-section>
+        <p><q-separator spaced /></p>
 
         <q-card-section class="q-pt-none">
           Three types of model outputs are available here: water surface elevation (WSE), change in WSE, and depth. All are in units of vertical feet. Here, water surface elevation is the elevation of the water surface relative to the NADV88 vertical datum (as opposed to other datums like Mean High High Water or  Mean Sea Level). Change in WSE is calculated as the difference in WSE from baseline to post-project implementation. Depth is the vertical distance from the water surface to the river floor or sea floor.
         </q-card-section>
 
-        <q-card-actions align="right">
-          <q-btn flat label="OK" color="primary" v-close-popup />
-        </q-card-actions>
-      </q-card>
+       </q-card>
     </q-dialog>
    
     <DynamicLayerList />

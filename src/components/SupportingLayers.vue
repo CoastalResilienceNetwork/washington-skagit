@@ -29,7 +29,7 @@
             <div class="col-11 q-pr-xl"><q-slider @change="setTransparency($event, prop.node.id)" :min="0" :max="1" :step=".1" :model-value="1" label /></div>
           </div>
           <div  q-mt-md>
-             <p class="text-secondary q-mb-none">{{prop.node.description}} </p>
+             <p class="q-mb-none">{{prop.node.description}} </p>
           </div>
            
         </q-card>

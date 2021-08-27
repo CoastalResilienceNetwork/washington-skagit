@@ -34,13 +34,14 @@
       <q-card-section>
         <div class="row">
           <div class="col-10" >
-            {{layer.layerNameFirst}} <br/>
+           <h6 class="q-ma-none text-subtitle2 text-secondary "> {{layer.layerNameFirst}} </h6>
+           <p><q-separator spaced /></p>
             {{layer.layerNameSecond}} <br/>
             {{layer.layerNameThird}} <br/>
           </div>
           <div class="col-2 text-center">
             <!-- adding .stop to click event prevents parent click event from firing when butn is clicked-->
-            <q-btn @click.stop="removeItem(layer,index)" flat round color="red" icon="delete" size="10px" />
+            <q-btn @click.stop="removeItem(layer,index)" flat round color="negative" icon="delete" size="10px" />
           </div>
         </div>
       </q-card-section>
