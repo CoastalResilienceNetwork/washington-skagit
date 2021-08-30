@@ -122,7 +122,7 @@ export default createStore({
                 //find the index of the object we just pushed, saves the reference to the location
                 let parentIndex = obj.findIndex(( obj => obj.id == l.id))
                 //save the parent node to the store with reference to its location in the object
-                storeNodes.push({parentIndex: parentIndex, parentLoc: obj[parentIndex], parentId: l.id})
+                storeNodes.push({parentIndex: parentIndex, parentLoc: obj[parentIndex], parentId: l.id, description: l.description})
                }
               // featurel layer with parent
              if (l.type !== "Group Layer" && l.parentLayer){
@@ -147,7 +147,7 @@ export default createStore({
                 //save the reference to the location          
                 parentLoc = parentLoc.children[parentIndex]
                 //save the parent node to the store with reference to its location in the object
-                storeNodes.push({parentIndex: parentIndex, parentLoc: parentLoc, parentId: l.id})
+                storeNodes.push({parentIndex: parentIndex, parentLoc: parentLoc, parentId: l.id, description: l.description})
              }
               // feature layer with no parent length = number of nodes
               if (l.type !== "Group Layer" && !l.parentLayer){

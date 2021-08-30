@@ -59,7 +59,7 @@
               <tbody>
                 <tr>
                   <td class="text-left">Small Projects</td>
-                  <td class="text-left">Included these projects: SF Levee Setbacks 2, 3, 4 (dike setback; 55 acres), McGlinn Causeway (hydraulic; 5.8 acres), TNC South Fork (backwater channel; 1.2 acres), Cottonwood Island (hydraulic; 14 acres), East Cottonwood (backwater channel; 3 acres), Pleasant Ridge South (dike setback; 28 acres), Hall Slough (dike setback; 135 acres), Fir Island Farm (dike setback; 138 acres), Telegraph Slough Full (dike setback/hydraulic; 538 acres), Sullivan Hacienda (dike setback; 207 acres), and Rawlins Road Distributary Channel (hydraulic; 5 acres)</td>
+                  <td class="text-left">Including these projects: SF Levee Setbacks 2, 3, 4 (dike setback; 55 acres), McGlinn Causeway (hydraulic; 5.8 acres), TNC South Fork (backwater channel; 1.2 acres), Cottonwood Island (hydraulic; 14 acres), East Cottonwood (backwater channel; 3 acres), Pleasant Ridge South (dike setback; 28 acres), Hall Slough (dike setback; 135 acres), Fir Island Farm (dike setback; 138 acres), Telegraph Slough Full (dike setback/hydraulic; 538 acres), Sullivan Hacienda (dike setback; 207 acres), and Rawlins Road Distributary Channel (hydraulic; 5 acres)</td>
                 </tr>
                 <tr>
                   <td class="text-left">Fir Island Cross Island Connector</td>
@@ -79,15 +79,15 @@
                 </tr>
                 <tr>
                   <td class="text-left">Moderate Influence Projects-Group 1</td>
-                  <td class="text-left">Included these projects: NF Right Bank Levee Setback (dike setback; 86 acres), Milltown Island (dike breach; 212 acres), Telegraph Slough 1 (dike setback; 188), and Thein Farm (levee setback; 75 acres)</td>
+                  <td class="text-left">Including these projects: NF Right Bank Levee Setback (dike setback; 86 acres), Milltown Island (dike breach; 212 acres), Telegraph Slough 1 (dike setback; 188), and Thein Farm (levee setback; 75 acres)</td>
                 </tr>
                 <tr>
                   <td class="text-left">Moderate Influence Projects-Group 2</td>
                   <td class="text-left">Including these projects: Deepwater Slough Phase 2 (dike removal; 265 acres), Rawlins Road (dike setback; 192 acres), and Telegraph Slough 1&amp;2 (dike setback; 305 acres)</td>
                 </tr>
                 <tr>
-                  <td class="text-left">Selected Projects</td>
-                  <td class="text-left">selecting all projects except Avon-Swin Bypass and NF Left Bank Levee Setback A</td>
+                  <td class="text-left">Cumulative Project Impacts Analysis</td>
+                  <td class="text-left">Including all projects except Avon-Swin Bypass and NF Left Bank Levee Setback A, because each had large negative impacts</td>
                 </tr>
                 <tr>
                   <td class="text-left">Climate Change without projects</td>
@@ -95,7 +95,7 @@
                 </tr>
                 <tr>
                   <td class="text-left">Climate Change with selected projects</td>
-                  <td class="text-right">Representing a climate change scenario selecting all projects except Avon-Swin Bypass and NF Left Bank Levee Setback A</td>
+                  <td class="text-left">Representing a climate change scenario selecting all projects except Avon-Swin Bypass and NF Left Bank Levee Setback A</td>
                 </tr>
               </tbody>
             </q-markup-table>
@@ -122,7 +122,7 @@
         <q-card-section class="q-pt-none">
           Information about flows and tides can allow a hydraulic model to estimate water volumes, elevations, and dynamics.
           Flow refers to the mean volume of water moving through the Skagit River Delta during a specified time of the year or during flood stage. Four flow scenarios were assessed here with volume provided in cubic feet per second (cfs): Low flow (12,000 cfs for both current and future/climate change low flow simulations); Second quarter (62,000 cfs average over April, May, &amp; June without climate change or 103,237 cfs with climate change); May mean river discharge (20,400 cfs); and Flood stage (93,200 cfs).
-          Tidal fluctations change water surface elevation (WSE) over the course of a day, and sea level rise is changing and projected to further change tidal WSE this century. Tidal water surface elevations relative to NADV88 vertical datum was assessed for five scenarios: High tide (10.8 ft); High tide with flood scenario only (10.4 ft); High tide with climate change (12.67 ft); Low tide (-3.3 ft); and Low tide with climate change (1.43 ft).
+          Tidal fluctations change water surface elevation (WSE) over the course of a day, and sea level rise is changing and projected to further change tidal WSE this century. Tidal water surface elevations relative to NADV88 vertical datum was assessed for five scenarios: High tide (10.8 ft); High tide with flood scenario only (10.4 ft); High tide with climate change (12.67 ft); Low tide (-3.3 ft); and Low tide with climate change (-1.43 ft).
         </q-card-section>
 
       </q-card>

@@ -10,7 +10,7 @@ export default {
     brand: {
     primary: '#23487a',
     secondary: '#0096d6',
-    accent: '#b7dedf',
+    accent: 'green',
     negative: '#C10015',
     // ...
   }
