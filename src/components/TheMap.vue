@@ -36,9 +36,10 @@ import MapImageLayer from "@arcgis/core/layers/MapImageLayer"
 import Legend from "@arcgis/core/widgets/Legend"
 import BasemapToggle from "@arcgis/core/widgets/BasemapToggle"
 import Measurement from "@arcgis/core/widgets/Measurement"
+import Expand from "@arcgis/core/widgets/Expand"
 
 //global in order to have access to the maplayer
-let esri = { mapLayer: '', supportingMapLayer:'', legend: '', map:'', basemapToggle:'', measurement:''}
+let esri = { mapLayer: '', supportingMapLayer:'', legend: '', map:'', basemapToggle:'', measurement:'', lgExpand:''}
 
 
 export default {
@@ -129,12 +130,19 @@ export default {
     //not sure of any other way than to build a dynamic legend making a call to the map service
     //https://services2.coastalresilience.org/arcgis/rest/services/Washington/Skagit_Supporting/MapServer/legend?dynamicLayers=["id":101,"source":{"type":"mapLayer","mapLayerId":3})]&f=html
 
+    // create legend widget
     esri.legend = new Legend({
-      view: mapView,
-      layerInfos: [],
-      respectLayerVisibility: true
+      view: mapView
     });
-    mapView.ui.add(esri.legend, "bottom-left")
+    // create expand widget to hide and show legend
+    esri.lgExpand = new Expand({
+      view: mapView,
+      content: esri.legend
+    })
+    // add expand to map
+    mapView.ui.add(esri.lgExpand, "bottom-left")
+    // show expanded legend
+    esri.lgExpand.expand();
 
     esri.basemapToggle = new BasemapToggle({
     view: mapView,  // The view that provides access to the map's "streets-vector" basemap
@@ -148,34 +156,29 @@ export default {
   methods: {
    
     updateMap(){
+      // instead of updaing the sublayers of the layer, we want to update the visibility of sublayers.
+      // for this line we loop through all the sublayers and turn off each one's visibility
+      esri.mapLayer.sublayers.forEach((sl) => {
+        sl.visible = false;
+      })
       if (this.layerSelected !== 'none' ){
-        console.log(this.layerSelected)
-        esri.mapLayer.sublayers = [{id: this.layerSelected}] 
-      }
-      else{
-        esri.mapLayer.sublayers = []
+        // now we find the selected sublayer and turn it's visibility to true.
+        // this is what the legend widget is looking for so it adds the layers. 
+        let layer = esri.mapLayer.findSublayerById(parseInt(this.layerSelected));
+        layer.visible = true;
       }
     },
 
     updateSupportingVisibility(){
-     //TODO: I think there is a better way to do this.. 
-     //when a layer is checked or unchecked the tree returns a list of all the checked layer id's
-     //Each time a layer is turned off or on, I loop through the sublayer list
-     //and if the layer is in my checked list, i set the visibility to true
-     //then push te updated sublayers object to the map layer
-     this.sublayers.forEach((layer, index) => {
-        if (this.supportingMapVisibleLayers.includes(layer.id)){
-          this.sublayers[index].visible = true
-        }
-        else{
-           this.sublayers[index].visible = false
-        }
+      // turn off all sublayers visibility
+      esri.supportingMapLayer.sublayers.forEach((sl) => {
+        sl.visible = false;
       })
-     
-      //push the updated list to the map
-      
-      esri.supportingMapLayer.sublayers = this.sublayers
-  
+     // turn on all sublayers that are part of supportingMapVisibleLayers object
+     this.supportingMapVisibleLayers.forEach((l) => {
+       let suplayer = esri.supportingMapLayer.findSublayerById(l);
+       suplayer.visible = true;
+     })  
     },
 
     updateOpacity(){
@@ -266,4 +269,13 @@ export default {
   fill: #E4E4E4;
 }
 
+</style>
+<style>
+.esri-legend__service h3{
+  line-height: unset;
+}
+.esri-legend__layer-cell{
+  padding-top:0;
+  padding-bottom:0;
+}
 </style>

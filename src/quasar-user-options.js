@@ -8,8 +8,8 @@ import '@quasar/extras/fontawesome-v5/fontawesome-v5.css'
 export default {
   config: {
     brand: {
-      primary: '#005387',
-      secondary: '#49a942',
+      primary: '#23487a',
+      secondary: '#0096d6',
       accent: '#90214a',
       dark: '#1d1d1d',
 

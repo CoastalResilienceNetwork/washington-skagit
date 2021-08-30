@@ -60,8 +60,8 @@ export default {
     padding: 2px;
     height: 150px;
     background-color:var(--q-primary);
-    border-bottom-right-radius: 110px;
-    border-top-right-radius: 110px;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
 }
 .portrait-toggle {
     display: none;
