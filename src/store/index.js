@@ -53,7 +53,8 @@ export default createStore({
     },
     updateSupportingLayerVisibleOpacity(state, obj){
       state.supportingVisibleLayerOpacity = obj
-    }
+    },
+    
   },
    
   actions: {

@@ -1,31 +1,55 @@
 <template>
+   
   <div id="map">
-    <div id="supportingLayers">
+    <!--div id="supportingLayers">
       <SupportingLayers />
-   </div>
+   </div-->
+    <div id="toolbarDiv" class="">
+       <button
+        id="distance"
+        class="esri-widget--button esri-interactive esri-icon-measure-line esriCustomButton"
+        title="Distance Measurement Tool"
+        @click="activateLineMeasurement()"
+      ></button>
+      <button
+        id="area"
+        class="esri-widget--button esri-interactive esri-icon-measure-area esriCustomButton"
+        title="Area Measurement Tool"
+        @click="activateAreaMeasurement()"
+      ></button>
+      <button
+        id="clear"
+        class="esri-widget--button esri-interactive esri-icon-trash esriCustomButton"
+        title="Clear Measurements"
+        @click="clearMeasurements()"
+      ></button>
+    </div>
   </div>
 </template>
 
 <script>
-import SupportingLayers from "./SupportingLayers.vue"
+//import SupportingLayers from "./SupportingLayers.vue"
 import Map from "@arcgis/core/Map"
 import MapView from "@arcgis/core/views/MapView"
 import MapImageLayer from "@arcgis/core/layers/MapImageLayer"
-import Expand from "@arcgis/core/widgets/Expand"
+//import Expand from "@arcgis/core/widgets/Expand"
 import Legend from "@arcgis/core/widgets/Legend"
+import BasemapToggle from "@arcgis/core/widgets/BasemapToggle"
+import Measurement from "@arcgis/core/widgets/Measurement"
 
 //global in order to have access to the maplayer
-let esri = { mapLayer: '', supportingMapLayer:''}
+let esri = { mapLayer: '', supportingMapLayer:'', legend: '', map:'', basemapToggle:'', measurement:''}
 
 
 export default {
   name: 'TheMap',
   components: {
-    SupportingLayers
+    //SupportingLayers
   },
   data() {
     return{
-      sublayers: {} // this item is returned from the store and updated with visibility and opacity in the map component only
+      sublayers: {}, // this item is returned from the store and updated with visibility and opacity in the map component only,
+      active: true
     }
   },
   computed: {
@@ -68,13 +92,13 @@ export default {
  
   mounted() {
      //select a basemap
-    const map = new Map({
+    esri.map = new Map({
       basemap: "streets"
     })
 
     //create the map view 
     const mapView = new MapView({
-      map: map,
+      map: esri.map,
       center: [-122.506479,48.370655],
       zoom: 11,
       container: this.$el
@@ -86,39 +110,43 @@ export default {
     })
     esri.supportingMapLayer = new MapImageLayer({
       url: "https://services2.coastalresilience.org/arcgis/rest/services/Washington/Skagit_Supporting/MapServer",
-      sublayers: []
+      sublayers: [],
+
     })
  
-    map.add(esri.mapLayer)
-    map.add(esri.supportingMapLayer)
+  
+    esri.map.add(esri.supportingMapLayer)
+    esri.map.add(esri.mapLayer)
+    //
    
-    let supportingLayersExpand = new Expand({
-      expandIconClass: "esri-icon-layer-list",  
+    esri.measurement = new Measurement({
+    view: mapView,
+
+    });
+    mapView.ui.add(esri.measurement, "bottom-right");
+
+    //esri's legend widget listener is not working!  and does not honor my visibility updates.  
+    //not sure of any other way than to build a dynamic legend making a call to the map service
+    //https://services2.coastalresilience.org/arcgis/rest/services/Washington/Skagit_Supporting/MapServer/legend?dynamicLayers=["id":101,"source":{"type":"mapLayer","mapLayerId":3})]&f=html
+
+    esri.legend = new Legend({
       view: mapView,
-      content: document.getElementById('supportingLayers')
+      layerInfos: [],
+      respectLayerVisibility: true
+    });
+    mapView.ui.add(esri.legend, "bottom-left")
+
+    esri.basemapToggle = new BasemapToggle({
+    view: mapView,  // The view that provides access to the map's "streets-vector" basemap
+    nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
     })
 
-    mapView.ui.add(supportingLayersExpand, "top-right")
-
-    let legend = new Legend({
-      view: mapView,
-      layerInfos: [
-              {
-                layer: esri.mapLayer,
-                title: "Simulation Models"
-              },
-               {
-                layer: esri.supportingMapLayer,
-                title: "Supporting Layers"
-              }
-
-    ]});
-    mapView.ui.add(legend, "bottom-left");
-      
+    mapView.ui.add(esri.basemapToggle, "top-right")
      
   },  
 
   methods: {
+   
     updateMap(){
       if (this.layerSelected !== 'none' ){
         console.log(this.layerSelected)
@@ -130,7 +158,11 @@ export default {
     },
 
     updateSupportingVisibility(){
-     
+     //TODO: I think there is a better way to do this.. 
+     //when a layer is checked or unchecked the tree returns a list of all the checked layer id's
+     //Each time a layer is turned off or on, I loop through the sublayer list
+     //and if the layer is in my checked list, i set the visibility to true
+     //then push te updated sublayers object to the map layer
      this.sublayers.forEach((layer, index) => {
         if (this.supportingMapVisibleLayers.includes(layer.id)){
           this.sublayers[index].visible = true
@@ -141,28 +173,53 @@ export default {
       })
      
       //push the updated list to the map
+      
       esri.supportingMapLayer.sublayers = this.sublayers
+  
     },
 
     updateOpacity(){
+      //update the opacity of the model layers
       esri.mapLayer.opacity = this.visibleLayerOpacity
     },
 
     updateSupportingOpacity(){
-    
       //find the layer in the list of sublayers and update its opacity
       let i = this.sublayers.findIndex(item => item.id == this.supportingVisibleLayerOpacity.id)
       this.sublayers[i].opacity = this.supportingVisibleLayerOpacity.value
-      //ppush the updated list to the map
+      //push the updated list to the map
       esri.supportingMapLayer.sublayers = this.sublayers
       
     },
     addSupportingLayers(){
       //add all layers to the map with visibility false
       //this method only gets run once when the map is loaded
-      console.log('run')
       esri.supportingMapLayer.sublayers = this.supportingSublayerList
       this.sublayers = this.supportingSublayerList
+
+    },
+    activateAreaMeasurement(){
+      const distanceButton = document.getElementById("distance");
+      const areaButton = document.getElementById("area");
+      esri.measurement.activeTool = 'area'
+      distanceButton.classList.remove("active")
+      areaButton.classList.add("active")
+    },
+    activateLineMeasurement(){
+      const distanceButton = document.getElementById("distance");
+      const areaButton = document.getElementById("area");
+      esri.measurement.activeTool = 'distance'
+      distanceButton.classList.add("active")
+      areaButton.classList.remove("active")
+    },
+     // Clears all measurements
+    clearMeasurements() {
+      const distanceButton = document.getElementById("distance");
+      const areaButton = document.getElementById("area");
+      //const clearButton = document.getElementById("clear");
+      distanceButton.classList.remove("active")
+      areaButton.classList.remove("active")
+      esri.measurement.clear();
     }
   }     
 }
@@ -180,4 +237,33 @@ export default {
   position: relative;
   border-bottom: #999 solid 1pt;
 }
+
+#toolbarDiv {
+  position: absolute;
+  top: 100px;
+  right: 15px;
+  cursor: default;
+
+ }
+
+ .esriCustomButton{
+   font-size: 25px;
+   width:50px;
+   height: 50px;
+   color: var(--q-primary);
+   margin-bottom:1px
+ }
+
+.esri-widget--button.active,
+.esri-widget--button.active:hover,
+.esri-widget--button.active:focus {
+  cursor: default;
+  background-color: lightgrey;
+}
+.esri-widget--button.active path,
+.esri-widget--button.active:hover path,
+.esri-widget--button.active:focus path {
+  fill: #E4E4E4;
+}
+
 </style>

@@ -1,6 +1,6 @@
 <template>
 <p><q-separator spaced /></p>
-  <p class="text-subtitle2 q-mb-none text-primary"> Model Layers: </p>
+  <p class="text-subtitle2 q-mb-none text-primary"> Model Layers </p>
   <div v-if="$store.state.selectedLayerList.length==0">
   <q-card class="q-ma-xs q-pa-lg" flat bordered>
     <p class="text-grey text-center">There are no simulations to display</p>
@@ -73,7 +73,6 @@ export default {
     cardSelected(layer,index){
       //make the selected item active
       this.selected = index
-      console.log('newitemadded')
       //update visible layer on map
       let setLayer = (this.$store.state.selectedLayerList.length > 0) ? layer.layerNum : 'none'
       this.$store.commit('updateVisibleLayer', setLayer)

@@ -1,7 +1,8 @@
 <template>
-  <div  class="q-pa-md q-gutter-sm background" v-if="$store.state.data.supportingLayers" @click.stop @keypress.stop >
-    <h6 class="q-mb-none q-mt-none text-primary">  {{$store.state.config.supportingLayersTitle}}</h6>
-     <q-input ref="filterRef" outlined dense v-model="filter" label="Begin typing to find a layer">
+  <div  class="q-pa-md q-gutter-sm" v-if="$store.state.data.supportingLayers" @click.stop @keypress.stop >
+    <p class="text-subtitle2 text-primary q-mb-none">   {{$store.state.config.supportingLayersTitle}}</p>
+    <p>Use the search to filter layers or expand the contents to browse</p>
+     <q-input ref="filterRef" class="q-mb-md" outlined dense v-model="filter" label="Begin typing to filter layers">
       <template v-slot:append>
         <q-icon v-if="filter !== ''" name="clear" class="cursor-pointer" @click="resetFilter" />
       </template>
@@ -124,12 +125,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 .background{
   background-color: white;
   overflow: auto;
-  padding: 20px;
-  max-height: 500px;
-  min-width: 400px;
+  max-height: calc(100vh - 120px);
+  min-width: 500px;
 }
 
 .esri-widget *:focus-visible, .esri-widget *:focus{

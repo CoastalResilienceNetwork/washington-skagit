@@ -7,25 +7,7 @@
   </div>
 
 
-   <!-- INTRO DIALOG -->
-    <q-dialog v-model="introDialog" >
-      <q-card style="max-width:800px">
-        <q-toolbar>
 
-          <q-toolbar-title class="text-secondary"><span class="text-weight-bold text-primary">SKAGIT BAY,</span> WASHINGTON</q-toolbar-title>
-          <q-btn flat round dense color="pirmary" icon="close" v-close-popup />
-        </q-toolbar>
-         
-        <p><q-separator spaced /></p>
-        <q-card-section class="text-center items-center">
-          <h5 class="q-title text-primary">Hydrolic Models for Selected Projects in Skagit Bay</h5>
-           <p>Image?</p>
-           <div style="border 2px black;width:200px"> </div>
-          ! Need intro content here <br/>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum repellendus sit voluptate voluptas eveniet porro. Rerum blanditiis perferendis totam, ea at omnis vel numquam exercitationem aut, natus minima, porro labore.
-        </q-card-section>
-      </q-card>
-    </q-dialog>
 </template>
 
 <script>
@@ -42,7 +24,7 @@ export default {
   },
   data(){
     return{
-      introDialog: true
+     
     }
       
   },

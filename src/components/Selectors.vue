@@ -1,6 +1,6 @@
 <template>
   <div class="q-ma-md">
-    <p class="text-subtitle2 text-primary q-mb-none"> Model Selectors: </p>
+    <p class="text-subtitle2 text-primary q-mb-none"> Model Selectors </p>
     <p>Use the selectors to add viewable layers to the map for comparison </p>
     <!-- SELECTS -->
     <div class='q-pl-md q-pr-sm'>
@@ -31,7 +31,7 @@
         <q-select outlined id="select2" class="q-pa-xs col-11" v-model="selected3" 
         :options="list3" label="Model output (ft)" dense options-dense></q-select>
         <div class="col-1 center">
-          <q-btn @click="dialogDisplay3=true" padding="none" color="primary" flat icon="info"  />
+          <q-btn @click="dialogDisplay3=true" padding="none" color="primary" flat icon="info"/>
         </div>
       </div>
     </div>
@@ -40,35 +40,67 @@
     <q-dialog v-model="dialogDisplay1">
       <q-card style="max-width:1000px">
         <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6 text-primary">Simulation</div>
+          <div class="text-h6 text-primary">Simulations</div>
           <q-space />
           <q-btn icon="close" color="primary" flat round dense v-close-popup />
         </q-card-section>
         <p><q-separator spaced /></p>
         <q-card-section class="q-pt-none">
           Eleven simulations and a baseline were run to model hydraulic impacts of implementing particular projects and project combinations. The baseline represents existing conditions without new project implementation around 2015. 
-          <ul>
-            <li><span class="text-secondary text-bold">Simulation 1: </span><br/>Small Projects, which included these projects: SF Levee Setbacks 2, 3, 4 (dike setback; 55 acres), McGlinn Causeway (hydraulic; 5.8 acres), TNC South Fork (backwater channel; 1.2 acres), Cottonwood Island (hydraulic; 14 acres), East Cottonwood (backwater channel; 3 acres), Pleasant Ridge South (dike setback; 28 acres), Hall Slough (dike setback; 135 acres), Fir Island Farm (dike setback; 138 acres), Telegraph Slough Full (dike setback/hydraulic; 538 acres), Sullivan Hacienda (dike setback; 207 acres), and Rawlins Road Distributary Channel (hydraulic; 5 acres). 
-              </li>
-            <li><span class="text-secondary text-bold">Simulation 2: </span><br/> Fir Island Cross Island Connector, a major hydraulic project covering 151 acres. 
-              </li>
-            <li><span class="text-secondary text-bold">Simulation 3: </span><br/>Avon-Swinomish Bypass, a major hydraulic project covering 1297 acres. 
-              </li>
-            <li><span class="text-secondary text-bold">Simulation 4: </span><br/>NF Left Bank Levee Setback C, a major dike setback project covering 279 acres. 
-              </li>
-            <li><span class="text-secondary text-bold">Simulation 5: </span><br/>NF Left Bank Levee Setback A, a major dike setback project covering 284 acres. 
-              </li>
-            <li><span class="text-secondary text-bold">Simulation 6: </span><br/>Moderate Influence Projects-Group 1, which included these projects: NF Right Bank Levee Setback (dike setback; 86 acres), Milltown Island (dike breach; 212 acres), Telegraph Slough 1 (dike setback; 188), and Thein Farm (levee setback; 75 acres). 
-              </li>
-            <li><span class="text-secondary text-bold">Simulation 7: </span><br/>Moderate Influence Projects-Group 2, including these projects: Deepwater Slough Phase 2 (dike removal; 265 acres), Rawlins Road (dike setback; 192 acres), and Telegraph Slough 1&amp;2 (dike setback; 305 acres).
-              </li>
-            <li><span class="text-secondary text-bold">Simulation 8: </span><br/>Selected Projects, selecting all projects except Avon-Swin Bypass and NF Left Bank Levee Setback A. 
-              </li>
-            <li><span class="text-secondary text-bold">Simulation 9: </span><br/>Climate Change without projects, representing a climate change scenario with no new project implementation.
-              </li>
-            <li><span class="text-secondary text-bold">Simulation 10:</span><br/>Climate Change with selected projects, representing a climate change scenario selecting all projects except Avon-Swin Bypass and NF Left Bank Levee Setback A.
-              </li>
-          </ul>
+          <div class="q-pa-md">
+           <div class="q-pa-md">
+            <q-markup-table separator="cell" wrap-cells>
+              <thead>
+                <tr>
+                  <th class="text-left">Simulation Name</th>
+                  <th class="text-center">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-left">Small Projects</td>
+                  <td class="text-left">Included these projects: SF Levee Setbacks 2, 3, 4 (dike setback; 55 acres), McGlinn Causeway (hydraulic; 5.8 acres), TNC South Fork (backwater channel; 1.2 acres), Cottonwood Island (hydraulic; 14 acres), East Cottonwood (backwater channel; 3 acres), Pleasant Ridge South (dike setback; 28 acres), Hall Slough (dike setback; 135 acres), Fir Island Farm (dike setback; 138 acres), Telegraph Slough Full (dike setback/hydraulic; 538 acres), Sullivan Hacienda (dike setback; 207 acres), and Rawlins Road Distributary Channel (hydraulic; 5 acres)</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Fir Island Cross Island Connector</td>
+                  <td class="text-left">A major hydraulic project covering 151 acres</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Avon-Swinomish Bypass</td>
+                  <td class="text-left">A major hydraulic project covering 1297 acres</td>
+                </tr>
+                <tr>
+                  <td class="text-left">NF Left Bank Levee Setback C</td>
+                  <td class="text-left">A major dike setback project covering 279 acresA major dike setback project covering 279 acres</td>
+                </tr>
+                <tr>
+                  <td class="text-left">NF Left Bank Levee Setback A</td>
+                  <td class="text-left">A major dike setback project covering 284 acres</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Moderate Influence Projects-Group 1</td>
+                  <td class="text-left">Included these projects: NF Right Bank Levee Setback (dike setback; 86 acres), Milltown Island (dike breach; 212 acres), Telegraph Slough 1 (dike setback; 188), and Thein Farm (levee setback; 75 acres)</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Moderate Influence Projects-Group 2</td>
+                  <td class="text-left">Including these projects: Deepwater Slough Phase 2 (dike removal; 265 acres), Rawlins Road (dike setback; 192 acres), and Telegraph Slough 1&amp;2 (dike setback; 305 acres)</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Selected Projects</td>
+                  <td class="text-left">selecting all projects except Avon-Swin Bypass and NF Left Bank Levee Setback A</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Climate Change without projects</td>
+                  <td class="text-left">Representing a climate change scenario with no new project implementation</td>
+                </tr>
+                <tr>
+                  <td class="text-left">Climate Change with selected projects</td>
+                  <td class="text-right">Representing a climate change scenario selecting all projects except Avon-Swin Bypass and NF Left Bank Levee Setback A</td>
+                </tr>
+              </tbody>
+            </q-markup-table>
+           </div>
+          </div>
         </q-card-section>
 
         <q-card-actions align="right">
@@ -77,7 +109,7 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="dialogDisplay2" style="width: 50%">
+    <q-dialog v-model="dialogDisplay2">
       <q-card>
        
         <q-card-section class="row items-center q-pb-none">
@@ -134,7 +166,7 @@ export default {
             selected3: '', //this value contains the map service layer number
             dialogDisplay1: false,
             dialogDisplay2: false,
-            dialogDisplay3: false      
+            dialogDisplay3: false,
         }
     },
     watch: {
@@ -147,9 +179,25 @@ export default {
             layerNum: this.selected3.layerNum
           }
           //saves the object to the list of layers used by the DynamicLayerList to draw layer cards
-          this.$store.commit('addLayer', layerSelectedObj)
-          //makes the most recently added layer visible on the map.  all other interaction with the map are controlled by DynamicLayerList.vue
-          this.$store.commit('updateVisibleLayer', this.selected3.layerNum)
+          // if layer not already in list add layer
+          let obj = this.$store.state.selectedLayerList
+          let i = obj.findIndex(( obj => obj.layerNum == layerSelectedObj.layerNum))
+          if (i == -1) {
+            this.$store.commit('addLayer', layerSelectedObj)
+            //makes the most recently added layer visible on the map.  all other interaction with the map are controlled by DynamicLayerList.vue
+            this.$store.commit('updateVisibleLayer', this.selected3.layerNum)
+          }
+         else {
+            //remove layer from the list
+            this.$store.commit('removeLayer', obj[i].layerNum)
+            //add it to the top of the list
+            this.$store.commit('addLayer', layerSelectedObj)
+            //makes the most recently added layer visible on the map.  all other interaction with the map are controlled by DynamicLayerList.vue
+            this.$store.commit('updateVisibleLayer', this.selected3.layerNum)
+          }
+        
+          
+          
        }
       },
       selected1: function(){
