@@ -8,16 +8,67 @@ import '@quasar/extras/fontawesome-v5/fontawesome-v5.css'
 export default {
   config: {
     brand: {
-      primary: '#23487a',
+      primary: '#005387',
       secondary: '#49a942',
       accent: '#90214a',
-      grey: "rgba(255,224,79,0.25)",
       dark: '#1d1d1d',
 
       positive: '#a0c04d',
       negative: '#c5351c',
       info: '#0096d6',
       warning: '#ffe04f'
+    },
+    blues: {
+
+    },
+    greens: {
+
+    },
+    tncPreferred: {
+      oakGreen: '#00703c',
+      leafGreen: '#49a942',
+      spring: '#a0c04d',
+      indigo: '#23487a',
+      lake: '#0096d6',
+      plum: '#90214a',
+      crimson: '#c5351c',
+      redRock: '#f3901d',
+      yellowField: '#ffe14f'
+    },
+    tncSupplemental: {
+      mallard: '#007932',
+      clover: '#46812b',
+      spruce: '#4d632d',
+      everglade: '#5e8827',
+      moss: '#6a8a22',
+      olive: '#737c29',
+      acadia: '#95ba79',
+      lime: '#cdc90f',
+      deepWaters: '#005387',
+      trueBlue: '#1b75bc',
+      cirrus: '#3a89b4',
+      frost: '#5e94b6',
+      marine: '#009ecb',
+      aqua: '#00a0af',
+      glacier: '#b7dee0',
+      iris: '#46166b',
+      carnelian: '#8a2f1d',
+      rust: '#c95c1a',
+      ochre: '#a88701',
+      nutmeg: '#b48724',
+      butternut: '#e39717',
+      gold: '#e6b120'
+    },
+    tncNeutrals: {
+      cocoa: '#623c25',
+      canyon: '#80561b',
+      storm: '#7e6a65',
+      driftwood: '#d2bfaa',
+      beach: '#dac792',
+      icicle: '#e4e6d7',
+      mudstone: '#989482',
+      sandstone: '#f7e7c9',
+      drySage: '#afb087'
     }
   },
   plugins: {
