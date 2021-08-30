@@ -34,12 +34,13 @@ import MapView from "@arcgis/core/views/MapView"
 import MapImageLayer from "@arcgis/core/layers/MapImageLayer"
 //import Expand from "@arcgis/core/widgets/Expand"
 import Legend from "@arcgis/core/widgets/Legend"
-import BasemapToggle from "@arcgis/core/widgets/BasemapToggle"
 import Measurement from "@arcgis/core/widgets/Measurement"
 import Expand from "@arcgis/core/widgets/Expand"
+import PortalSource from "@arcgis/core/widgets/BasemapGallery/support/PortalBasemapsSource"
+import BasemapGallery from "@arcgis/core/widgets/BasemapGallery"
 
 //global in order to have access to the maplayer
-let esri = { mapLayer: '', supportingMapLayer:'', legend: '', map:'', basemapToggle:'', measurement:'', lgExpand:''}
+let esri = { mapLayer: '', supportingMapLayer:'', legend: '', map:'', measurement:'', lgExpand:''}
 
 
 export default {
@@ -94,7 +95,7 @@ export default {
   mounted() {
      //select a basemap
     esri.map = new Map({
-      basemap: "streets"
+      basemap: "topo"
     })
 
     //create the map view 
@@ -124,11 +125,7 @@ export default {
     view: mapView,
 
     });
-    mapView.ui.add(esri.measurement, "bottom-right");
-
-    //esri's legend widget listener is not working!  and does not honor my visibility updates.  
-    //not sure of any other way than to build a dynamic legend making a call to the map service
-    //https://services2.coastalresilience.org/arcgis/rest/services/Washington/Skagit_Supporting/MapServer/legend?dynamicLayers=["id":101,"source":{"type":"mapLayer","mapLayerId":3})]&f=html
+    mapView.ui.add(esri.measurement, "top-left");
 
     // create legend widget
     esri.legend = new Legend({
@@ -144,13 +141,34 @@ export default {
     // show expanded legend
     esri.lgExpand.expand();
 
-    esri.basemapToggle = new BasemapToggle({
-    view: mapView,  // The view that provides access to the map's "streets-vector" basemap
-    nextBasemap: "hybrid"  // Allows for toggling to the "hybrid" basemap
-    })
+    // basemaps
+    const allowedBasemapTitles = ["Topographic", "Imagery Hybrid", "Streets"];
+    // filtering portal basemaps
+    const source = new PortalSource({
+      filterFunction: (basemap) => allowedBasemapTitles.indexOf(basemap.portalItem.title) > -1
+    });
+    // basemap gallery widget
+    var basemapGallery = new BasemapGallery({
+      view: mapView,
+      source: source,
+      container: document.createElement("div")
+    });
+    // expand to hold basemap gallery
+    var bgExpand = new Expand({
+      view: mapView,
+      content: basemapGallery
+    });
+    // place expand in view
+    mapView.ui.add(bgExpand, {
+      position: "top-right"
+    });
+    // close expand when basemap is changed
+    esri.map.watch('basemap.title', function(){
+      bgExpand.collapse();
+    });
 
-    mapView.ui.add(esri.basemapToggle, "top-right")
-     
+    // move zoom controls to top right
+    mapView.ui.move([ "zoom" ], "top-right");
   },  
 
   methods: {
@@ -243,19 +261,18 @@ export default {
 
 #toolbarDiv {
   position: absolute;
-  top: 100px;
-  right: 15px;
-  cursor: default;
-
+  left: 10px;
+  top: 10px;
+  display: flex;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 30%);
  }
-
- .esriCustomButton{
-   font-size: 25px;
-   width:50px;
-   height: 50px;
-   color: var(--q-primary);
-   margin-bottom:1px
- }
+#toolbarDiv button{
+  border: unset;
+}
+#area{
+  border-right: solid 1px rgba(110,110,110,0.3) !important;
+  border-left: solid 1px rgba(110,110,110,0.3) !important;
+}
 
 .esri-widget--button.active,
 .esri-widget--button.active:hover,
@@ -277,5 +294,8 @@ export default {
 .esri-legend__layer-cell{
   padding-top:0;
   padding-bottom:0;
+}
+.esri-measurement{
+   margin: 40px 0 0 -4px;
 }
 </style>
