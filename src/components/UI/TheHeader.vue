@@ -1,6 +1,6 @@
 <template>
   <header> 
-    <span>Skagit Estuary Restoration: <span class="text-secondary">a multi-benefit analysis</span></span>
+    <span>Skagit Estuary Restoration: <span class="text-secondary">A Multi-benefit Analysis</span></span>
   <div>  <q-btn @click="showHelp=true; step=3" padding="none" color="white" flat icon="help"  /></div>
   </header>
 
@@ -9,7 +9,7 @@
     <q-card style="max-width:800px">
       <q-toolbar>
 
-        <q-toolbar-title class="text-primary text-bold">Skagit Estuary Restoration: <span class="text-secondary text-h6">a multi-benefit analysis</span></q-toolbar-title>
+        <q-toolbar-title class="text-primary text-bold">Skagit Estuary Restoration: <span class="text-secondary text-h6">A Multi-benefit Analysis</span></q-toolbar-title>
         <q-btn flat round dense color="pirmary" icon="close" v-close-popup />
       </q-toolbar>
         
