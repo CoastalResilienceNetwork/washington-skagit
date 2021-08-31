@@ -1,6 +1,6 @@
 <template>
-  <div  class="q-pa-md q-gutter-sm" v-if="$store.state.data.supportingLayers" @click.stop @keypress.stop >
-    <p class="text-subtitle2 text-primary q-mb-none">   {{$store.state.config.supportingLayersTitle}}</p>
+  <div  class="q-pl-md q-pr-md q-gutter-sm" v-if="$store.state.data.supportingLayers" @click.stop @keypress.stop >
+    <p class="text-subtitle2 text-primary q-mb-none"> {{$store.state.config.supportingLayersTitle}}</p>
     <p>Use the search to filter layers or expand the contents to browse</p>
      <q-input ref="filterRef" class="q-mb-md" outlined dense v-model="filter" label="Begin typing to filter layers">
       <template v-slot:append>
@@ -12,6 +12,7 @@
       node-key="id"
       tick-strategy="leaf"
       v-model:ticked="ticked"
+      v-model:expanded="expanded"
       :filter = "filter"
       @update:ticked="clicked($event)"
     >
@@ -26,29 +27,16 @@
         header-class="text-secondary"
       >
         <q-card class="q-pa-sm q-ml-md">
-              <p class="q-mb-none">{{prop.node.description}} </p>
+          <p class="q-mb-none">{{prop.node.description}} </p>
           <div class='row items-center q-pa-sm'>
             <div class="col-1"><q-icon color="secondary" name="opacity" size="xs" /></div>
             <div class="col-11 q-pr-xl"><q-slider  color="secondary" snap dense @change="setTransparency($event, prop.node.id)" :min="0" :max="1" :step=".1" :model-value="1" label /></div>
           </div>
-          <div  q-mt-md>
-         
-          </div>
-           
         </q-card>
       </q-expansion-item>
       </q-list>
     </div>
-    <!--div class="q-pa-none" style="max-width: 350px">
-        <p class="q-mb-none">{{prop.node.description}} </p>
-          <div class='row items-center q-pa-sm'>
-            <div class="col-1"><q-icon color="accent" name="opacity" size="xs" /></div>
-            <div class="col-6 q-pr-xl"><q-slider color="accent" snap dense @change="setTransparency($event, prop.node.id)" :min="0" :max="1" :step=".1" :model-value="1" label /></div>
-          </div>
-     </div-->
-
-  
-      
+    
     </template>
     </q-tree>
   </div>
@@ -61,22 +49,19 @@ import { ref } from 'vue'
 export default {
   name: 'SupportingLayers',
   data() {
-        return{
-            layerList:'',
-            activeLayers:[],
-            showDescription: false,
-            expanded: false,
-            transparency: [1],
-        }
+      return{
+        layerList:'',
+        activeLayers:[],
+        showDescription: false,
+        ticked: this.$store.state.tree.ticked,
+        expanded: this.$store.state.tree.expanded
+      }
     },
 
   setup () {
     const filter = ref('')
     const filterRef = ref(null)
     return {
-      //selected: ref([]),
-      ticked: ref([]),
-      //expanded: ref([]),
       filter,
       filterRef,
       resetFilter () {
@@ -90,13 +75,15 @@ export default {
 
   watch: {
       ticked: function(){        
-        this.$store.commit('updateSupportingVisibleLayers', this.ticked)
+        this.$store.commit('updateSupportingVisibleLayers', this.ticked) //TODOreplace this with tree obj
+        this.$store.commit('updateTreeState', {ticked: this.ticked, expanded: this.expanded})
       }
   },
   methods: {
     setTransparency(value,id){
       let layerObj = {value: value, id: id}
       this.$store.commit('updateSupportingLayerVisibleOpacity', layerObj)
+      
     },
     clicked(event){
       console.log(event)
@@ -108,12 +95,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
-.background{
+.backgroundMap{
   background-color: white;
   overflow: auto;
   max-height: calc(100vh - 120px);
   min-width: 500px;
 }
+
 
 .esri-widget *:focus-visible, .esri-widget *:focus{
   outline: none;

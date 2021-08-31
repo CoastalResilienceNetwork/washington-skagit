@@ -17,6 +17,7 @@ export default createStore({
       supportingLayersTitle: 'Supporting Layers'
     },
       // app state info
+      tree: {ticked:[], expanded:[]},
       visibleLayer: '',
       visibleLayerOpacity: 1,
       selectedLayerList: [],
@@ -47,6 +48,10 @@ export default createStore({
     },
     updateSupportingVisibleLayers(state, arr){
       state.supportingVisibleLayers = arr
+    },
+    updateTreeState(state, obj){
+      state.tree.ticked = obj.ticked
+      state.tree.expanded = obj.expanded
     },
     updateVisibleLayerOpacity(state,num){
       state.visibleLayerOpacity = num
