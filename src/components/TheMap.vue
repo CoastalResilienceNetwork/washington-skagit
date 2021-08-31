@@ -32,7 +32,6 @@
 import Map from "@arcgis/core/Map"
 import MapView from "@arcgis/core/views/MapView"
 import MapImageLayer from "@arcgis/core/layers/MapImageLayer"
-//import Expand from "@arcgis/core/widgets/Expand"
 import Legend from "@arcgis/core/widgets/Legend"
 import Measurement from "@arcgis/core/widgets/Measurement"
 import Expand from "@arcgis/core/widgets/Expand"
@@ -40,7 +39,7 @@ import PortalSource from "@arcgis/core/widgets/BasemapGallery/support/PortalBase
 import BasemapGallery from "@arcgis/core/widgets/BasemapGallery"
 
 //global in order to have access to the maplayer
-let esri = { mapLayer: '', supportingMapLayer:'', legend: '', map:'', measurement:'', lgExpand:''}
+let esri = { modelLayer: '', supportingMapLayer:'', legend: '', map:'', measurement:'', lgExpand:''}
 
 
 export default {
@@ -50,22 +49,21 @@ export default {
   },
   data() {
     return{
-      sublayers: {}, // this item is returned from the store and updated with visibility and opacity in the map component only,
       active: true
     }
   },
   computed: {
-    layerSelected(){
+    modelVisibleLayer(){
       return this.$store.state.visibleLayer
     },
     supportingMapVisibleLayers(){
       return this.$store.state.supportingVisibleLayers
     },
-    visibleLayerOpacity(){
+    modelLayerOpacity(){
       return this.$store.state.visibleLayerOpacity
     },
     supportingVisibleLayerOpacity(){
-      //returns object {value: val, id: id}
+      //returns object {value: OpacVal, id: Layerid}
       return this.$store.state.supportingVisibleLayerOpacity
     },
     supportingSublayerList(){
@@ -74,14 +72,14 @@ export default {
     
   },
   watch:{
-    layerSelected() {
-      this.updateMap()
+    modelVisibleLayer() {
+      this.updateModelVisibility()
     },
     supportingMapVisibleLayers(){
       this.updateSupportingVisibility()
     },
-    visibleLayerOpacity(){
-      this.updateOpacity()
+    modelLayerOpacity(){
+      this.updateModelOpacity()
     },
     supportingVisibleLayerOpacity(){
       this.updateSupportingOpacity()
@@ -107,19 +105,18 @@ export default {
     })
 
     //TODO:  move these urls to config file
-    esri.mapLayer = new MapImageLayer({
+    esri.modelLayer = new MapImageLayer({
       url: "https://services2.coastalresilience.org/arcgis/rest/services/Washington/Skagit/MapServer",
     })
     esri.supportingMapLayer = new MapImageLayer({
       url: "https://services2.coastalresilience.org/arcgis/rest/services/Washington/Skagit_Supporting/MapServer",
       sublayers: [],
-
     })
  
-  
+    esri.map.add(esri.modelLayer)
     esri.map.add(esri.supportingMapLayer)
-    esri.map.add(esri.mapLayer)
-    //
+    
+    
    
     esri.measurement = new Measurement({
     view: mapView,
@@ -139,10 +136,10 @@ export default {
     // add expand to map
     mapView.ui.add(esri.lgExpand, "bottom-left")
     // show expanded legend
-    esri.lgExpand.expand();
+    esri.lgExpand.expand()
 
     // basemaps
-    const allowedBasemapTitles = ["Topographic", "Imagery Hybrid", "Streets"];
+    const allowedBasemapTitles = ["Topographic", "Imagery Hybrid", "Streets"]
     // filtering portal basemaps
     const source = new PortalSource({
       filterFunction: (basemap) => allowedBasemapTitles.indexOf(basemap.portalItem.title) > -1
@@ -168,57 +165,54 @@ export default {
     });
 
     // move zoom controls to top right
-    mapView.ui.move([ "zoom" ], "top-right");
+    mapView.ui.move([ "zoom" ], "top-right")
   },  
 
   methods: {
    
-    updateMap(){
+    updateModelVisibility(){
       // instead of updaing the sublayers of the layer, we want to update the visibility of sublayers.
       // for this line we loop through all the sublayers and turn off each one's visibility
-      esri.mapLayer.sublayers.forEach((sl) => {
-        sl.visible = false;
+      esri.modelLayer.sublayers.forEach((sl) => {
+        sl.visible = false
       })
-      if (this.layerSelected !== 'none' ){
+      if (this.modelVisibleLayer !== 'none' ){
         // now we find the selected sublayer and turn it's visibility to true.
         // this is what the legend widget is looking for so it adds the layers. 
-        let layer = esri.mapLayer.findSublayerById(parseInt(this.layerSelected));
-        layer.visible = true;
+        let layer = esri.modelLayer.findSublayerById(parseInt(this.modelVisibleLayer));
+        layer.visible = true
       }
     },
 
     updateSupportingVisibility(){
       // turn off all sublayers visibility
       esri.supportingMapLayer.sublayers.forEach((sl) => {
-        sl.visible = false;
+        sl.visible = false
       })
      // turn on all sublayers that are part of supportingMapVisibleLayers object
      this.supportingMapVisibleLayers.forEach((l) => {
-       let suplayer = esri.supportingMapLayer.findSublayerById(l);
-       suplayer.visible = true;
+       let sublayer = esri.supportingMapLayer.findSublayerById(l);
+       sublayer.visible = true
      })  
     },
 
-    updateOpacity(){
+    updateModelOpacity(){
       //update the opacity of the model layers
-      esri.mapLayer.opacity = this.visibleLayerOpacity
+      esri.modelLayer.opacity = this.modelLayerOpacity
     },
 
     updateSupportingOpacity(){
       //find the layer in the list of sublayers and update its opacity
-      let i = this.sublayers.findIndex(item => item.id == this.supportingVisibleLayerOpacity.id)
-      this.sublayers[i].opacity = this.supportingVisibleLayerOpacity.value
-      //push the updated list to the map
-      esri.supportingMapLayer.sublayers = this.sublayers
-      
+      let sublayer = esri.supportingMapLayer.findSublayerById(this.supportingVisibleLayerOpacity.id);
+      sublayer.opacity = this.supportingVisibleLayerOpacity.value
     },
+
     addSupportingLayers(){
       //add all layers to the map with visibility false
       //this method only gets run once when the map is loaded
       esri.supportingMapLayer.sublayers = this.supportingSublayerList
-      this.sublayers = this.supportingSublayerList
-
     },
+
     activateAreaMeasurement(){
       const distanceButton = document.getElementById("distance");
       const areaButton = document.getElementById("area");
@@ -226,6 +220,7 @@ export default {
       distanceButton.classList.remove("active")
       areaButton.classList.add("active")
     },
+
     activateLineMeasurement(){
       const distanceButton = document.getElementById("distance");
       const areaButton = document.getElementById("area");
@@ -233,11 +228,11 @@ export default {
       distanceButton.classList.add("active")
       areaButton.classList.remove("active")
     },
+
      // Clears all measurements
     clearMeasurements() {
       const distanceButton = document.getElementById("distance");
       const areaButton = document.getElementById("area");
-      //const clearButton = document.getElementById("clear");
       distanceButton.classList.remove("active")
       areaButton.classList.remove("active")
       esri.measurement.clear();
