@@ -14,7 +14,6 @@
       v-model:ticked="ticked"
       v-model:expanded="expanded"
       :filter = "filter"
-      @update:ticked="clicked($event)"
     >
     <template v-slot:body-toggle="prop">
     <div class="q-pa-none" style="max-width: 350px">
