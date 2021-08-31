@@ -22,13 +22,14 @@
       <q-expansion-item
         dense
         dense-toggle
-        icon="more_horiz"
-        label="see more"
+        icon=""
+        label=""
         header-class="text-secondary"
+        id="expandMore"
       >
-        <q-card class="q-pa-sm q-ml-md">
+        <q-card class="q-ma-none q-pa-none">
           <p class="q-mb-none">{{prop.node.description}} </p>
-          <div class='row items-center q-pa-sm'>
+          <div class='row items-left q-pa-sm'>
             <div class="col-1"><q-icon color="secondary" name="opacity" size="xs" /></div>
             <div class="col-11 q-pr-xl"><q-slider  color="secondary" snap dense @change="setTransparency($event, prop.node.id)" :min="0" :max="1" :step=".1" :model-value="1" label /></div>
           </div>
@@ -85,9 +86,11 @@ export default {
       this.$store.commit('updateSupportingLayerVisibleOpacity', layerObj)
       
     },
-    clicked(event){
-      console.log(event)
-    }
+    setHeight(e){
+      // const expandMore = document.getElementById("expandMore")
+       //expandMore.style.height="100%"
+       console.log(e)
+    },
   }
 }
 </script>
@@ -110,6 +113,8 @@ export default {
 <style>
 .q-tree__node-body{
   padding:0px !important;
+  top:-30px;
+  left: 23px;
 }
 
 

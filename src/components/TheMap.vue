@@ -214,16 +214,16 @@ export default {
     },
 
     activateAreaMeasurement(){
-      const distanceButton = document.getElementById("distance");
-      const areaButton = document.getElementById("area");
+      const distanceButton = document.getElementById("distance")
+      const areaButton = document.getElementById("area")
       esri.measurement.activeTool = 'area'
       distanceButton.classList.remove("active")
       areaButton.classList.add("active")
     },
 
     activateLineMeasurement(){
-      const distanceButton = document.getElementById("distance");
-      const areaButton = document.getElementById("area");
+      const distanceButton = document.getElementById("distance")
+      const areaButton = document.getElementById("area")
       esri.measurement.activeTool = 'distance'
       distanceButton.classList.add("active")
       areaButton.classList.remove("active")
@@ -231,11 +231,11 @@ export default {
 
      // Clears all measurements
     clearMeasurements() {
-      const distanceButton = document.getElementById("distance");
-      const areaButton = document.getElementById("area");
+      const distanceButton = document.getElementById("distance")
+      const areaButton = document.getElementById("area")
       distanceButton.classList.remove("active")
       areaButton.classList.remove("active")
-      esri.measurement.clear();
+      esri.measurement.clear()
     }
   }     
 }
