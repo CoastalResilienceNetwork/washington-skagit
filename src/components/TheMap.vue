@@ -264,7 +264,7 @@ export default {
   left: 10px;
   top: 10px;
   display: flex;
-  box-shadow: 0 1px 2px rgb(0 0 0 / 80%);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 60%);
  }
 #toolbarDiv button{
   border: unset;
@@ -299,6 +299,6 @@ export default {
    margin: 40px 0 0 -4px;
 }
 .esri-ui-corner .esri-component, .esri-expand__content {
-    box-shadow: 1px 1px 2px rgb(0 0 0 / 80%);
+    box-shadow: 1px 1px 2px rgb(0 0 0 / 60%);
 }
 </style>
