@@ -114,7 +114,8 @@ export default {
 .q-tree__node-body{
   padding:0px !important;
   top:-30px;
-  left: 23px;
+  margin-bottom: -30px;
+  left: 25px;
 }
 
 
