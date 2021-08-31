@@ -74,10 +74,10 @@ export default {
   },
 
   watch: {
-      ticked: function(){        
-        this.$store.commit('updateSupportingVisibleLayers', this.ticked) //TODOreplace this with tree obj
-        this.$store.commit('updateTreeState', {ticked: this.ticked, expanded: this.expanded})
-      }
+    ticked: function(){        
+      this.$store.commit('updateSupportingVisibleLayers', this.ticked) //TODOreplace this with tree obj
+      this.$store.commit('updateTreeState', {ticked: this.ticked, expanded: this.expanded})
+    }
   },
   methods: {
     setTransparency(value,id){

@@ -123,7 +123,11 @@ export default createStore({
               // Group Layer with no parent
              if (l.type == "Group Layer" && !l.parentLayer){
                 //push the object to the list 
-                obj.push({label: l.name, children: [], id: l.id, noTick: true})
+                let noTick = true
+                if (l.id==0){
+                  noTick = false
+                }
+                obj.push({label: l.name, children: [], id: l.id, noTick: noTick})
                 //find the index of the object we just pushed, saves the reference to the location
                 let parentIndex = obj.findIndex(( obj => obj.id == l.id))
                 //save the parent node to the store with reference to its location in the object
@@ -135,6 +139,7 @@ export default createStore({
                     let nodesIndex = storeNodes.findIndex(( obj => obj.parentId == l.parentLayer.id)) 
                     //set the location of the parent
                     let parentLoc = storeNodes[nodesIndex].parentLoc 
+                    
                     //push the child to the parent            
                     parentLoc.children.push({label: l.name, children: [], body: 'toggle', id: l.id, description: l.description})
                     supportingSublayerList.push({id:l.id, visible:false, opacity: 1})
@@ -146,7 +151,8 @@ export default createStore({
                 //set the location of the parent
                 let parentLoc = storeNodes[nodesIndex].parentLoc 
                 //push the new parent into the found parent as child
-                parentLoc.children.push({label: l.name, children: [], id: l.id, noTick:true})
+               
+                parentLoc.children.push({label: l.name, children: [], id: l.id, noTick: true})
                 //find the index of the child we just pushed
                 let parentIndex = parentLoc.children.findIndex(( obj => obj.id == l.id))   
                 //save the reference to the location          
