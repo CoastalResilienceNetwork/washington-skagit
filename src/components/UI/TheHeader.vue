@@ -144,8 +144,12 @@ export default {
 
     header span{
       flex: 1;
+      width: 700px;
+      overflow: hidden;
+      white-space: nowrap; 
+      text-overflow: ellipsis;
     }
-
+    
     .minHeight{
       min-height: 200px;
     }
