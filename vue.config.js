@@ -1,3 +1,4 @@
-module.exports = {
-    publicPath: "/washington/skagit/",
-  };
+//module.exports = {
+   // publicPath: "/washington/skagit/",
+    
+  //};

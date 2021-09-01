@@ -128,7 +128,7 @@
       </q-card>
     </q-dialog>
 
-    <q-dialog v-model="dialogDisplay3" seamless>
+    <q-dialog v-model="dialogDisplay3">
       <q-card>
         
          <q-card-section class="row items-center q-pb-none">
@@ -187,7 +187,7 @@ export default {
             //makes the most recently added layer visible on the map.  all other interaction with the map are controlled by DynamicLayerList.vue
             this.$store.commit('updateVisibleLayer', this.selected3.layerNum)
           }
-         else {
+          else {
             //remove layer from the list
             this.$store.commit('removeLayer', obj[i].layerNum)
             //add it to the top of the list
@@ -195,10 +195,7 @@ export default {
             //makes the most recently added layer visible on the map.  all other interaction with the map are controlled by DynamicLayerList.vue
             this.$store.commit('updateVisibleLayer', this.selected3.layerNum)
           }
-        
-          
-          
-       }
+        }
       },
       selected1: function(){
         this.buildSelect2()
@@ -225,9 +222,6 @@ export default {
         this.selected2.third.forEach(element => list3.push({"label":element[0] , "layerNum":element[1]}))
         this.list3 = list3
       },
-
-   
-
     },
 
  

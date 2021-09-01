@@ -17,16 +17,16 @@ export default createStore({
       supportingLayersTitle: 'Supporting Layers'
     },
       // app state info
-      tree: {ticked:[], expanded:[]},
+      tree: {ticked:[], expanded:[]}, 
       visibleLayer: '',
       visibleLayerOpacity: 1,
       selectedLayerList: [],
-      supportingVisibleLayers:[], // when user ticks the layer, make it visible
       supportingVisibleLayerOpacity: {},
       showControls: false,
       hideControls: true
    },
   mutations: {
+    //data retrieved from web services
     updateSelectorData(state, obj){
       state.data.selectors = obj
     },
@@ -36,6 +36,8 @@ export default createStore({
     updateSupportingSublayerList(state, obj){
       state.data.supportingSublayerList = obj
     },
+
+    //app state
     addLayer(state, obj){
       //add to layer list - wanting to add to the top of the card list
       state.selectedLayerList.unshift(obj)
@@ -45,9 +47,6 @@ export default createStore({
     },
     updateVisibleLayer(state,num){
       state.visibleLayer = num
-    },
-    updateSupportingVisibleLayers(state, arr){
-      state.supportingVisibleLayers = arr
     },
     updateTreeState(state, obj){
       state.tree.ticked = obj.ticked
@@ -100,7 +99,7 @@ export default createStore({
                 else{
                 l.second.push({[n.second]:[[n.third,n.id]]})
                 }
-            }
+              }
             })
         })
        

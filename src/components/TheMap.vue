@@ -57,7 +57,7 @@ export default {
       return this.$store.state.visibleLayer
     },
     supportingMapVisibleLayers(){
-      return this.$store.state.supportingVisibleLayers
+      return this.$store.state.tree.ticked
     },
     modelLayerOpacity(){
       return this.$store.state.visibleLayerOpacity

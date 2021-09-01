@@ -43,7 +43,6 @@
 </template>
 
 <script>
-//import esriRequest from "@arcgis/core/request"
 import { ref } from 'vue'
 
 export default {
@@ -59,6 +58,7 @@ export default {
     },
 
   setup () {
+    //TODO: this is the setup for the filter.  I think this can be moved to data obj.
     const filter = ref('')
     const filterRef = ref(null)
     return {
@@ -84,11 +84,6 @@ export default {
       let layerObj = {value: value, id: id}
       this.$store.commit('updateSupportingLayerVisibleOpacity', layerObj)
       
-    },
-    setHeight(e){
-      // const expandMore = document.getElementById("expandMore")
-       //expandMore.style.height="100%"
-       console.log(e)
     },
   }
 }
