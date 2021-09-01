@@ -54,12 +54,15 @@ export default {
   },
   computed: {
     modelVisibleLayer(){
+      //returns integer
       return this.$store.state.visibleLayer
     },
     supportingMapVisibleLayers(){
+      //returns array [layerid,]
       return this.$store.state.tree.ticked
     },
     modelLayerOpacity(){
+      //returns decimal number
       return this.$store.state.visibleLayerOpacity
     },
     supportingVisibleLayerOpacity(){
@@ -67,6 +70,7 @@ export default {
       return this.$store.state.supportingVisibleLayerOpacity
     },
     supportingSublayerList(){
+      //returns list of objects [{id:l.id, visible:false, opacity: 1},]
        return this.$store.state.data.supportingSublayerList
     }
     

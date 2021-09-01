@@ -19,6 +19,7 @@
           ref="stepper"
           color="primary"
           animated
+          :vertical="$q.screen.lt.sm ? true : false"
         >
           <q-step
             :name="1"
@@ -152,4 +153,11 @@ export default {
     .maxWidth{
       max-width: 800px;
     }
+
+    @media screen and (max-width: 700px){
+     .minHeight{
+       min-height: 100%;
+      }
+
+}
 </style>
