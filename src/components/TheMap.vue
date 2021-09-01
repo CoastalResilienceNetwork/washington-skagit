@@ -139,8 +139,9 @@ export default {
     })
     // add expand to map
     mapView.ui.add(esri.lgExpand, "bottom-left")
-    // show expanded legend
-    esri.lgExpand.expand()
+    // show expanded legend on desktop, collapse on mobile
+    this.$q.screen.lt.sm ? true : esri.lgExpand.expand()
+    
 
     // basemaps
     const allowedBasemapTitles = ["Topographic", "Imagery Hybrid", "Streets"]

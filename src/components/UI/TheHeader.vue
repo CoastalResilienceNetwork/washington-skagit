@@ -1,7 +1,7 @@
 <template>
   <header> 
     <span>Skagit Estuary Restoration: <span class="text-secondary">A Multi-benefit Analysis</span></span>
-  <div>  <q-btn @click="showHelp=true; step=3" padding="none" color="white" flat icon="help"  /></div>
+    <div><q-btn @click="showHelp=true; step=3" padding="none" color="white" flat icon="help"  /></div>
   </header>
 
     <!-- INTRO DIALOG -->
