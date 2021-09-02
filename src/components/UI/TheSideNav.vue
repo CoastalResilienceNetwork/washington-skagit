@@ -32,5 +32,9 @@ export default {
         width:100%;
         height: 45%;
     }
+
+    #side-nav.hideSideNavWidth{
+        height: 0%;
+    }
 }
 </style>

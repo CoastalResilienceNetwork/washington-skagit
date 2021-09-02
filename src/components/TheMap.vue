@@ -140,7 +140,7 @@ export default {
     // add expand to map
     mapView.ui.add(esri.lgExpand, "bottom-left")
     // show expanded legend on desktop, collapse on mobile
-    this.$q.screen.lt.sm ? true : esri.lgExpand.expand()
+    this.$q.screen.lt.sm || this.$q.screen.lt.md ? true : esri.lgExpand.expand()
     
 
     // basemaps
