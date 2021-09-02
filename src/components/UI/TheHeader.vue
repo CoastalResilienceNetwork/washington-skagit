@@ -1,6 +1,6 @@
 <template>
   <header> 
-    <span>Skagit Estuary Restoration: <span class="text-secondary">A Multi-benefit Analysis</span></span>
+    <span>Skagit Estuary Restoration: <br v-if=" this.$q.screen.lt.sm "/><span class="text-secondary">A Multi-benefit Analysis</span></span>
     <div><q-btn @click="showHelp=true; step=3" padding="none" color="white" flat icon="help"  /></div>
   </header>
 
@@ -8,7 +8,7 @@
   <q-dialog v-model="showHelp" >
     <q-card class="maxWidth">
       <q-toolbar>
-        <q-toolbar-title class="text-primary text-bold">Skagit Estuary Restoration: <span class="text-secondary text-h6">A Multi-benefit Analysis</span></q-toolbar-title>
+        <q-toolbar-title class="text-primary text-subtitle2 text-bold">Skagit Estuary Restoration: <br v-if=" this.$q.screen.lt.sm "/> <span class="text-secondary text-subtitle2">A Multi-benefit Analysis</span></q-toolbar-title>
         <q-btn flat round dense color="pirmary" icon="close" v-close-popup />
       </q-toolbar>
       <q-separator spaced />
@@ -146,7 +146,7 @@ export default {
       flex: 1;
       width: 700px;
       overflow: hidden;
-      white-space: nowrap; 
+      white-space: wrap; 
       text-overflow: ellipsis;
     }
     
@@ -162,6 +162,17 @@ export default {
      .minHeight{
        min-height: 100%;
       }
+     header{
+      background: var(--q-primary);
+      height: 50px;
+      color: #fff;
+      font-size: 14px;
+      padding: 5px 10px;
+      box-shadow: 0px 8px 8px -2px rgb(51 51 51 / 42%);
+      position: relative;
+      z-index: 10;
+      display: flex;
+    }
 
 }
 </style>
