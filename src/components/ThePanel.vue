@@ -65,4 +65,14 @@ export default {
     display: block;
     width: 100%;
   }
+
+  @media screen and (max-width: 700px){
+    .panel{
+      position: relative;
+      height: 32vh;
+      overflow-y: auto;
+      display: block;
+      width: 100%;
+    }
+}
 </style>
