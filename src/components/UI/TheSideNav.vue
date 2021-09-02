@@ -30,7 +30,7 @@ export default {
 @media screen and (max-width: 700px){
     #side-nav{
         width:100%;
-        height: 45%;
+        height: 43%;
     }
 
     #side-nav.hideSideNavWidth{

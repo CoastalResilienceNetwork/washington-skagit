@@ -59,8 +59,11 @@ export default {
     display: none;
    }
   .esri-view-width-xsmall .esri-expand--auto .esri-expand__container--expanded {
-    top: 60px;
-    height: 45%;
+    top: 100px;
   }
+  .esri-view-width-xsmall .esri-expand--auto .esri-expand__container--expanded .esri-expand__panel{
+    padding: 2px;
+  }
+
 }
 </style>
