@@ -46,7 +46,6 @@ export default {
 @media screen and (max-width: 700px){
   #panel-map-wrap {
     flex-direction: column-reverse;
-    height: calc(94%);
     width: 100vw;
   }
   #side-nav{
