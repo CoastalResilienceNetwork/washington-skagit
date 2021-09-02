@@ -95,7 +95,7 @@ export default {
     }
     .half-circle{
         margin-top: -25px;
-        margin-left: 40%;
+        margin-left: calc(50vw - 75px);
         padding: 2px;
         height: 25px;
         width: 150px;
