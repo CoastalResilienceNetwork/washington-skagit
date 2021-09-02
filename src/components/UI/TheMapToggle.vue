@@ -54,7 +54,6 @@ export default {
 }
 .landscape-toggle {
     display: block;
-
     margin-right: -21px;
     margin-top: 30%;
     padding: 2px;
@@ -86,7 +85,7 @@ export default {
         text-orientation: unset;
         padding-top: 4px;
         font-size: 14px;
-        margin-bottom: 10px;
+        margin-bottom: 2px;
     }   
     .portrait-toggle{
         display: block;
@@ -94,16 +93,17 @@ export default {
     .landscape-toggle{
         display: none;
     }
-    .half-circle {
-        margin-right: -21px;
-        margin: 0 auto;
+    .half-circle{
+        margin-top: -25px;
+        margin-left: 40%;
         padding: 2px;
+        height: 25px;
         width: 150px;
-        height:22px;
-        border-radius: 0;
-        border-bottom-right-radius: 4px;
-        border-bottom-left-radius: 4px;
-        box-shadow: 1px 2px 2px 1px rgb(51 51 51 / 25%);
+        background-color:var(--q-primary);
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        box-shadow: 4px 2px 6px -2px rgb(51 51 51 / 65%);
+        cursor: pointer;
     }
 }
 </style>
