@@ -126,7 +126,7 @@ export default createStore({
                 if (l.id==0){
                   noTick = false
                 }
-                obj.push({label: l.name, children: [], id: l.id, noTick: noTick})
+                obj.push({label: l.name, children: [], id: l.id, icon: "info", noTick: noTick})
                 //find the index of the object we just pushed, saves the reference to the location
                 let parentIndex = obj.findIndex(( obj => obj.id == l.id))
                 //save the parent node to the store with reference to its location in the object

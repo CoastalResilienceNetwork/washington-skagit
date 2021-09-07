@@ -16,6 +16,7 @@
       <q-card-section class="text-center items-center">
         <q-stepper
           v-model="step"
+          header-nav
           ref="stepper"
           color="primary"
           animated
@@ -64,43 +65,48 @@
             <div class="text-left">
               <p class="text-subtitle2 text-primary q-mb-none">Overview:</p>
               <p>
-                *Provide an overview and explain how to compare output*
-                Select multiple simulations to add to the map for comparison.  Click the simulation layer to view it on the map. 
+                Compare layers from the hydrodynamic model outputs to consider relative changes in the Skagit Delta based on selections. Click the simulation layer to view it on the map.
               </p>
               <q-card class="q-pa-md" >
                 <p class="text-subtitle2 text-primary q-mb-none">Model Selectors</p>
                 <q-separator spaced></q-separator>
                 <p><span class="text-secondary">Step 1]</span>
-                Select from a list of 10 estuary restoration project simulations </p>
-                <p><span class=" text-secondary">Step 2]</span> Explain flow/tide options* </p>
-                <p><span class=" text-secondary">Step 3]</span> Explain model output* </p>
+                Select from a list of 10 estuary restoration project simulations. Eleven simulations and a baseline were run to model hydraulic impacts of implementing particular projects and project combinations. The baseline represents existing conditions without new project implementation around 2015. Click on the (i) next to the drop-down box for more info. </p>
+                <p><span class=" text-secondary">Step 2]</span> Select from four flow scenarios. Information about flows and tides can allow a hydraulic model to estimate water volumes, elevations, and dynamics. Flow refers to the mean volume of water moving through the Skagit River Delta during a specified time of the year or during flood stage. Four flow scenarios were assessed here with volume provided in cubic feet per second (cfs). Click on the (i) next to the drop-down box for more info. </p>
+                <p><span class=" text-secondary">Step 3]</span> Select from three types of model outputs are available here: water surface elevation (WSE), change in WSE, and depth. All are in units of vertical feet. Click on the (i) next to the drop-down box for more info. </p>
+                <p><span class=" text-secondary">Step 4]</span> The selection of the above will result in a model layer displaying your choices shown on the map. You can select several model layers. Each will result in a clickable rectangle with selections shown for each model layer. You can click between model layers for comparison.</p>
               </q-card>
             </div>
           </q-step>
 
           <q-step
             :name="4"
-            title="Additional Information"
+            title="Model Outcomes and Project Results"
             icon="library_books"
             active-icon="library_books"
-             class="row items-center minHeight"
+            class="row items-center minHeight"
           >
             <div class="text-left">
-              <p class="text-subtitle2 text-primary q-mb-none">Overview:</p>
+              <p class="text-subtitle2 text-primary q-mb-none">Outcomes</p>
               <p>
-              *Provide an overview and explain how to use supporting layers*
+              ERSA used the models and additional GIS analysis to assess benefits and impacts of each project concept in meeting objectives for fish, farm, and flood interests. <a href="https://tnc.app.box.com/s/l6gkt8a46ztkt00zuby4t2whpr9d12we" target="_blank">[see page 2 on ERSA Summary]</a>
               </p>
-              </div>
-
-            <q-card class="q-pa-md text-left" >
-              <p class="text-subtitle2 text-primary q-mb-none">Supporting Layers</p>
-              <q-separator spaced></q-separator>
-              <p><span class="text-secondary">Elevation: Inform Fish Objectives 2 and 6]</span>
-                Elevation data was used to calculate scores for fish two objectives: 1) habitat diversity represented by vegetation communities within a project site and 2) the time each acre of habitat would be inundated to a water depth that could be used by fish
+              <p class="text-subtitle2 text-primary q-mb-none">Results</p>
+              <p>
+              The ERSA analysis defined five distinct management groups. These groups represent restoration concepts with significant differences in the relative level of benefits and/or impacts to fish, floods, and farms. Project concept management groups:
               </p>
-              <p><span class=" text-secondary">Project Concept Areas]</span> Project concepts are based on information available in 2016 and project details could change during planning, design and implementation.
+            </div>
+            <div>
+              <q-img style="max-width:600px" :src="require('@/assets/mngmentGroups.png')"/>
+            </div>
+            <div class="text-left">
+              <p>The SHDM Team has prioritized advancement of the Green Project Concepts because of their potential to achieve more significant benefits while having relatively low impacts. 
               </p>
-            </q-card>
+              <p>If you select “Project Concept Areas” from “supporting layers” it will display each management group, or priority group for each concept.
+              </p>
+              <p>For a map of just the management groups by project concept,  <a href="https://tnc.app.box.com/s/l6gkt8a46ztkt00zuby4t2whpr9d12we" target="_blank">see page 3 of the ERSA Summary.</a>
+              </p>
+            </div>
           </q-step>
 
           <template v-slot:navigation>
@@ -155,7 +161,7 @@ export default {
     }
 
     .maxWidth{
-      max-width: 800px;
+      max-width: 1000px;
     }
 
     @media screen and (max-width: 700px){
