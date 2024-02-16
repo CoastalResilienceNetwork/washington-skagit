@@ -79,7 +79,7 @@
     <q-card>
       
       <q-card-section class="row items-center q-pb-none">
-        <div class="text-h6 text-primary">Relavant Farm Analysis</div>
+        <div class="text-h6 text-primary">Relevant Farm Analysis (ca. 2016)</div>
         <q-space />
         <q-btn icon="close" color="primary" flat round dense v-close-popup />
       </q-card-section>
